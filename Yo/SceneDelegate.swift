@@ -9,22 +9,65 @@ import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
+    
     var window: UIWindow?
 
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
        
         guard let windowScene = (scene as? UIWindowScene) else { return }
-        
+                
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         
         window?.windowScene = windowScene
         
-        window?.rootViewController = ViewController()
+        window?.rootViewController = setupTabBar()
         
         window?.makeKeyAndVisible()
         
     }
+    
+    
+    func setupMainNavController() -> UINavigationController {
+        
+        let mainViewController = MainViewController()
+        
+        mainViewController.tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "thunder"), tag: 0)
+        
+        mainViewController.title = "Yo"
+        
+        return UINavigationController(rootViewController: mainViewController)
+        
+    }
+    
+    
+    func setupProfileNavController() -> UINavigationController {
+        
+        let profileViewController = ProfileViewController()
+        
+        profileViewController.tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "user"), tag: 1)
+        
+        profileViewController.title = "Profile"
+        
+        return UINavigationController(rootViewController: profileViewController)
+        
+    }
+    
+    
+    func setupTabBar() -> UITabBarController {
+        
+        let tabBar = UITabBarController()
+        
+        UITabBar.appearance().tintColor = .systemPurple
+        
+        UITabBar.appearance().backgroundColor = .systemBackground
+        
+        tabBar.viewControllers = [setupMainNavController(), setupProfileNavController()]
+        
+        return tabBar
+        
+    }
+    
 
     func sceneDidDisconnect(_ scene: UIScene) {
         // Called as the scene is being released by the system.
