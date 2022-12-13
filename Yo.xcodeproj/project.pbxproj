@@ -7,15 +7,29 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		37B260702B8BE1AE44B15B6B /* Pods_Yo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13B59480EACACE785743B64E /* Pods_Yo.framework */; };
 		6792B564294494D80033165E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6792B563294494D80033165E /* AppDelegate.swift */; };
 		6792B566294494D80033165E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6792B565294494D80033165E /* SceneDelegate.swift */; };
 		6792B56D294494D80033165E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6792B56C294494D80033165E /* Assets.xcassets */; };
 		6792B570294494D80033165E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6792B56E294494D80033165E /* LaunchScreen.storyboard */; };
 		6792B57829449B650033165E /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6792B57729449B650033165E /* MainViewController.swift */; };
 		6792B57A29449B710033165E /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6792B57929449B710033165E /* ProfileViewController.swift */; };
+		9DA87AAD2944AE6800D7E29E /* PhoneNumberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA87AAC2944AE6800D7E29E /* PhoneNumberViewController.swift */; };
+		9DA87AB42944B03200D7E29E /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA87AB32944B03200D7E29E /* AuthManager.swift */; };
+		9DA87AB62944B1D700D7E29E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA87AB52944B1D700D7E29E /* Constants.swift */; };
+		9DA87AB82944B2A600D7E29E /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA87AB72944B2A600D7E29E /* Extensions.swift */; };
+		9DA87ABA294734DC00D7E29E /* PhoneCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA87AB9294734DC00D7E29E /* PhoneCodeViewController.swift */; };
+		9DA87ABC2947358700D7E29E /* SignUpFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA87ABB2947358700D7E29E /* SignUpFormViewController.swift */; };
+		9DA87ABF2947522F00D7E29E /* YoPhoneCodeTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA87ABE2947522F00D7E29E /* YoPhoneCodeTextField.swift */; };
+		9DA87AC12947672500D7E29E /* YoDetailedInfoFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA87AC02947672500D7E29E /* YoDetailedInfoFormView.swift */; };
+		9DA87AC329478B0800D7E29E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9DA87AC229478B0800D7E29E /* GoogleService-Info.plist */; };
+		9DB117B6294895F50058F0C2 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB117B5294895F50058F0C2 /* DatabaseManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		03B5A9CC36CD8AD39A8E14A1 /* Pods-Yo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Yo.release.xcconfig"; path = "Target Support Files/Pods-Yo/Pods-Yo.release.xcconfig"; sourceTree = "<group>"; };
+		13B59480EACACE785743B64E /* Pods_Yo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Yo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		625A89C58F87A18D5B8A424E /* Pods-Yo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Yo.debug.xcconfig"; path = "Target Support Files/Pods-Yo/Pods-Yo.debug.xcconfig"; sourceTree = "<group>"; };
 		6792B560294494D80033165E /* Yo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Yo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6792B563294494D80033165E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6792B565294494D80033165E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -24,6 +38,16 @@
 		6792B571294494D80033165E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6792B57729449B650033165E /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		6792B57929449B710033165E /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		9DA87AAC2944AE6800D7E29E /* PhoneNumberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumberViewController.swift; sourceTree = "<group>"; };
+		9DA87AB32944B03200D7E29E /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
+		9DA87AB52944B1D700D7E29E /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		9DA87AB72944B2A600D7E29E /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		9DA87AB9294734DC00D7E29E /* PhoneCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneCodeViewController.swift; sourceTree = "<group>"; };
+		9DA87ABB2947358700D7E29E /* SignUpFormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpFormViewController.swift; sourceTree = "<group>"; };
+		9DA87ABE2947522F00D7E29E /* YoPhoneCodeTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YoPhoneCodeTextField.swift; sourceTree = "<group>"; };
+		9DA87AC02947672500D7E29E /* YoDetailedInfoFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YoDetailedInfoFormView.swift; sourceTree = "<group>"; };
+		9DA87AC229478B0800D7E29E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		9DB117B5294895F50058F0C2 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +55,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				37B260702B8BE1AE44B15B6B /* Pods_Yo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -42,6 +67,8 @@
 			children = (
 				6792B562294494D80033165E /* Yo */,
 				6792B561294494D80033165E /* Products */,
+				ADBBB094531F59F447974041 /* Pods */,
+				EEC304044922B391069CCC86 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -56,15 +83,106 @@
 		6792B562294494D80033165E /* Yo */ = {
 			isa = PBXGroup;
 			children = (
-				6792B563294494D80033165E /* AppDelegate.swift */,
-				6792B565294494D80033165E /* SceneDelegate.swift */,
-				6792B57729449B650033165E /* MainViewController.swift */,
-				6792B57929449B710033165E /* ProfileViewController.swift */,
-				6792B56C294494D80033165E /* Assets.xcassets */,
-				6792B56E294494D80033165E /* LaunchScreen.storyboard */,
+				9DA87AB22944B02700D7E29E /* Managers */,
 				6792B571294494D80033165E /* Info.plist */,
+				9DA87AA82944AE1100D7E29E /* Resources */,
+				9DA87AA72944AE0C00D7E29E /* Models */,
+				9DA87AA62944AE0600D7E29E /* Controllers */,
+				9DA87AA52944AE0000D7E29E /* Views */,
 			);
 			path = Yo;
+			sourceTree = "<group>";
+		};
+		9DA87AA52944AE0000D7E29E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				9DA87ABD2947521300D7E29E /* Custom UI */,
+				6792B56E294494D80033165E /* LaunchScreen.storyboard */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		9DA87AA62944AE0600D7E29E /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				9DA87AAB2944AE4400D7E29E /* Authorization */,
+				9DA87AA92944AE3100D7E29E /* Main */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		9DA87AA72944AE0C00D7E29E /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		9DA87AA82944AE1100D7E29E /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				9DA87AC229478B0800D7E29E /* GoogleService-Info.plist */,
+				6792B563294494D80033165E /* AppDelegate.swift */,
+				6792B565294494D80033165E /* SceneDelegate.swift */,
+				6792B56C294494D80033165E /* Assets.xcassets */,
+				9DA87AB52944B1D700D7E29E /* Constants.swift */,
+				9DA87AB72944B2A600D7E29E /* Extensions.swift */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		9DA87AA92944AE3100D7E29E /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				6792B57729449B650033165E /* MainViewController.swift */,
+				6792B57929449B710033165E /* ProfileViewController.swift */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		9DA87AAB2944AE4400D7E29E /* Authorization */ = {
+			isa = PBXGroup;
+			children = (
+				9DA87AAC2944AE6800D7E29E /* PhoneNumberViewController.swift */,
+				9DA87AB9294734DC00D7E29E /* PhoneCodeViewController.swift */,
+				9DA87ABB2947358700D7E29E /* SignUpFormViewController.swift */,
+			);
+			path = Authorization;
+			sourceTree = "<group>";
+		};
+		9DA87AB22944B02700D7E29E /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				9DA87AB32944B03200D7E29E /* AuthManager.swift */,
+				9DB117B5294895F50058F0C2 /* DatabaseManager.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		9DA87ABD2947521300D7E29E /* Custom UI */ = {
+			isa = PBXGroup;
+			children = (
+				9DA87ABE2947522F00D7E29E /* YoPhoneCodeTextField.swift */,
+				9DA87AC02947672500D7E29E /* YoDetailedInfoFormView.swift */,
+			);
+			path = "Custom UI";
+			sourceTree = "<group>";
+		};
+		ADBBB094531F59F447974041 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				625A89C58F87A18D5B8A424E /* Pods-Yo.debug.xcconfig */,
+				03B5A9CC36CD8AD39A8E14A1 /* Pods-Yo.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		EEC304044922B391069CCC86 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				13B59480EACACE785743B64E /* Pods_Yo.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -74,9 +192,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6792B574294494D80033165E /* Build configuration list for PBXNativeTarget "Yo" */;
 			buildPhases = (
+				DEDA2A0731F2EF7A0328739B /* [CP] Check Pods Manifest.lock */,
 				6792B55C294494D80033165E /* Sources */,
 				6792B55D294494D80033165E /* Frameworks */,
 				6792B55E294494D80033165E /* Resources */,
+				959802841F161258C2AC0D4F /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -127,20 +247,72 @@
 			files = (
 				6792B570294494D80033165E /* LaunchScreen.storyboard in Resources */,
 				6792B56D294494D80033165E /* Assets.xcassets in Resources */,
+				9DA87AC329478B0800D7E29E /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		959802841F161258C2AC0D4F /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Yo/Pods-Yo-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Yo/Pods-Yo-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Yo/Pods-Yo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DEDA2A0731F2EF7A0328739B /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Yo-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		6792B55C294494D80033165E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9DA87AB82944B2A600D7E29E /* Extensions.swift in Sources */,
+				9DA87AB42944B03200D7E29E /* AuthManager.swift in Sources */,
+				9DB117B6294895F50058F0C2 /* DatabaseManager.swift in Sources */,
+				9DA87ABA294734DC00D7E29E /* PhoneCodeViewController.swift in Sources */,
 				6792B57829449B650033165E /* MainViewController.swift in Sources */,
+				9DA87ABF2947522F00D7E29E /* YoPhoneCodeTextField.swift in Sources */,
+				9DA87ABC2947358700D7E29E /* SignUpFormViewController.swift in Sources */,
 				6792B564294494D80033165E /* AppDelegate.swift in Sources */,
 				6792B57A29449B710033165E /* ProfileViewController.swift in Sources */,
+				9DA87AAD2944AE6800D7E29E /* PhoneNumberViewController.swift in Sources */,
 				6792B566294494D80033165E /* SceneDelegate.swift in Sources */,
+				9DA87AC12947672500D7E29E /* YoDetailedInfoFormView.swift in Sources */,
+				9DA87AB62944B1D700D7E29E /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -274,16 +446,19 @@
 		};
 		6792B575294494D80033165E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 625A89C58F87A18D5B8A424E /* Pods-Yo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 8G846H35TQ;
+				DEVELOPMENT_TEAM = XF47MVN3FY;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Yo/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Yo;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -291,7 +466,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.Tomi.Yo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Tomi.YoApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -304,16 +479,19 @@
 		};
 		6792B576294494D80033165E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 03B5A9CC36CD8AD39A8E14A1 /* Pods-Yo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 8G846H35TQ;
+				DEVELOPMENT_TEAM = XF47MVN3FY;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Yo/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Yo;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -321,7 +499,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.Tomi.Yo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Tomi.YoApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;

@@ -6,14 +6,25 @@
 //
 
 import UIKit
+import FirebaseCore
+import IQKeyboardManager
+import UserNotifications
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        // setup firebase
+        FirebaseApp.configure()
+        
+        
+        
+        // setup keyboard manager
+        let keyboardManager = IQKeyboardManager.shared()
+        keyboardManager.isEnabled = true
+        keyboardManager.isEnableAutoToolbar = false
+        
         return true
     }
 
