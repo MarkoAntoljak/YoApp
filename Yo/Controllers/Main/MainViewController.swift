@@ -9,63 +9,173 @@ import UIKit
 
 class MainViewController: UIViewController {
     
-    // MARK: Attributes
-    private let constants = Constants.shared
-
-
+    var sentUsers: [User] = []
+    
+    let mainControllerTableView = UITableView()
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
+        
+        setupMainViewController()
+        
+        viewDidLayoutSubviews()
+        
+        setupMainTableView()
+        
+    }
+    
 
-        configureMainViewController()
+    
+    override func viewDidLayoutSubviews() {
+        
+        super.viewDidLayoutSubviews()
+        
+        mainControllerTableView.translatesAutoresizingMaskIntoConstraints = false
+        
+        mainControllerTableView.frame = CGRect(x: 0, y: 100, width: view.frame.width, height: view.frame.height - 100)
         
     }
     
     
-    func configureMainViewController() {
+    private func setupMainTableView() {
+        
+        view.addSubview(mainControllerTableView)
+                
+        mainControllerTableView.register(UserTableViewCell.self, forCellReuseIdentifier: UserTableViewCell.reuseIdentifier)
+        
+        mainControllerTableView.delegate = self
+        
+        mainControllerTableView.dataSource = self
+        
+    }
+    
+    
+    func setupMainViewController() {
         
         view.backgroundColor = .systemBackground
         
-        let addButton = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(closeButtonTapped))
+        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonTapped))
         
-        addButton.tintColor = .systemRed
+        addButton.tintColor = .systemPurple
         
         navigationItem.rightBarButtonItem = addButton
         
     }
     
     
-    @objc func closeButtonTapped() {
+    @objc func addButtonTapped() {
         
-        print("Tapped!")
+        let contactsViewController = ContactsViewController()
         
-        signOut()
+        present(contactsViewController, animated: true)
+        
+        contactsViewController.contactsDelegate = self
         
     }
     
-    // signing out the user
-    private func signOut() {
+    
+    func sortData() {
         
-        AuthManager.shared.signOut { [weak self] success in
+        sentUsers.sort { user1, user2 in
             
-            guard let strongSelf = self else {return}
+            if let dateAndTime1 = user1.dateAndTimeSent, let dateAndTime2 = user2.dateAndTimeSent {
+                
+                return dateAndTime1 > dateAndTime2
+                
+            }
             
-            if success {
-                // go back to signIn screen
-                DispatchQueue.main.async {
-                    
-                    let navVC = UINavigationController(rootViewController: PhoneNumberViewController())
-                    navVC.modalPresentationStyle = .fullScreen
-                    strongSelf.present(navVC, animated: true)
-                }
+            return false
+            
+        }
+        
+    }
+    
+}
+
+
+extension MainViewController: ContactsViewControllerDelegate {
+    
+    func sendUsers(users: [User]) {
+        
+        for user in users {
+            
+            if let index = sentUsers.firstIndex(where: { $0.name == user.name } ) {
+                
+                sentUsers[index].dateAndTimeSent = Date()
                 
             } else {
-                strongSelf.constants.presentError(
-                    title: "Error",
-                    message: "There was a problem with sign out. Please try again.",
-                    target: strongSelf)
+                
+                sentUsers.append(user)
+                
+                sentUsers[sentUsers.count - 1].dateAndTimeSent = Date()
+                
             }
+            
         }
+        
+        sortData()
+        
+        self.mainControllerTableView.reloadData()
+        
+    }
+    
+}
+
+
+extension MainViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        return sentUsers.count
+        
+    }
+    
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let userName = sentUsers[indexPath.row].name
+        
+        let userCell = tableView.dequeueReusableCell(withIdentifier: UserTableViewCell.reuseIdentifier, for: indexPath) as! UserTableViewCell
+        
+        userCell.userNameLabel.text = userName
+        
+        return userCell
+        
+    }
+    
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        sentUsers[indexPath.row].dateAndTimeSent = Date()
+        
+        sortData()
+        
+        tableView.reloadData()
+        
+    }
+    
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        
+        return 100.0
+        
+    }
+    
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        
+        if editingStyle == .delete {
+            
+            sentUsers.remove(at: indexPath.row)
+            
+            mainControllerTableView.deleteRows(at: [indexPath], with: .fade)
+            
+        }
+        
     }
     
 }
