@@ -22,15 +22,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.windowScene = windowScene
         
         // directing user to home screen if it is already signed in
-        if AuthManager.shared.isSignedIn {
-            
-            window?.rootViewController = setupTabBar()
-            
-        } else {
-            // user is not signed in
-            window?.rootViewController = UINavigationController(rootViewController: PhoneNumberViewController())
-            
-        }
+//        if AuthManager.shared.isSignedIn {
+//
+//
+//
+//        } else {
+//            // user is not signed in
+//            window?.rootViewController = UINavigationController(rootViewController: PhoneNumberViewController())
+//
+//        }
+        window?.rootViewController = setupTabBar()
         
         window?.makeKeyAndVisible()
         
@@ -43,20 +44,33 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         mainViewController.tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "thunder"), tag: 0)
         
-        mainViewController.title = "Yo"
+        mainViewController.title = ""
         
         return UINavigationController(rootViewController: mainViewController)
         
     }
     
     
+    func setupRequestsNavController() -> UINavigationController {
+        
+        let requestsViewController = RequestsViewController()
+        
+        requestsViewController.tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "star"), tag: 1)
+        
+        requestsViewController.title = ""
+        
+        return UINavigationController(rootViewController: requestsViewController)
+        
+    }
+    
+    
     func setupProfileNavController() -> UINavigationController {
         
-        let profileViewController = ProfileViewController()
+        let profileViewController = ProfileSettingsViewController()
         
-        profileViewController.tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "user"), tag: 1)
+        profileViewController.tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "user"), tag: 2)
         
-        profileViewController.title = "Profile"
+        profileViewController.title = ""
         
         return UINavigationController(rootViewController: profileViewController)
         
@@ -65,15 +79,19 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     func setupTabBar() -> UITabBarController {
         
-        let tabBar = UITabBarController()
+        let tabBarController = UITabBarController()
         
         UITabBar.appearance().tintColor = .systemPurple
         
-        UITabBar.appearance().backgroundColor = .systemBackground
+        let tabBarLineView = UIView(frame: CGRect(x: 0, y: 0, width: tabBarController.tabBar.frame.size.width, height: 0.2))
         
-        tabBar.viewControllers = [setupMainNavController(), setupProfileNavController()]
+        tabBarLineView.backgroundColor = UIColor.systemGray6
         
-        return tabBar
+        tabBarController.tabBar.addSubview(tabBarLineView)
+                
+        tabBarController.viewControllers = [setupMainNavController(), setupRequestsNavController(), setupProfileNavController()]
+        
+        return tabBarController
         
     }
     

@@ -80,9 +80,9 @@ class ContactsViewController: UIViewController {
         
         super.viewDidLayoutSubviews()
         
-        navbar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 50)
+        navbar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 60)
         
-        contactsControllerTableView.frame = CGRect(x: 0, y: 50, width: view.frame.width, height: view.frame.height - 50)
+        contactsControllerTableView.frame = CGRect(x: 0, y: navbar.frame.height, width: view.frame.width, height: view.frame.height - navbar.frame.height)
         
     }
     
@@ -91,9 +91,7 @@ class ContactsViewController: UIViewController {
         
         view.backgroundColor = .systemBackground
         
-        contactsControllerTableView.delegate = self
         
-        contactsControllerTableView.dataSource = self
         
     }
     
@@ -108,22 +106,63 @@ class ContactsViewController: UIViewController {
         
         let sendButton = UIBarButtonItem(title: "Send Yo", style: .done, target: self, action: #selector(sendButtonTapped))
         
-        let navItem = UINavigationItem(title: "")
+        let navItem = UINavigationItem(title: "Your contacts")
         
         navItem.leftBarButtonItem = cancelButton
         
         navItem.rightBarButtonItem = sendButton
         
+        navItem.titleView = setTitle(title: "Your contacts", subtitle: "Tap to select")
+        
         navbar.items = [navItem]
+        
+        navbar.tintColor = .systemPurple
         
     }
     
     
+    func setTitle(title:String, subtitle:String) -> UIView {
+        let titleLabel = UILabel(frame: CGRectMake(0, -2, 0, 0))
+
+        
+        titleLabel.font = UIFont.boldSystemFont(ofSize: 15)
+        titleLabel.text = title
+        titleLabel.sizeToFit()
+
+        let subtitleLabel = UILabel(frame: CGRectMake(0, 22, 0, 0))
+        subtitleLabel.backgroundColor = UIColor.clear
+        
+        subtitleLabel.font = UIFont.systemFont(ofSize: 12)
+        subtitleLabel.text = subtitle
+        subtitleLabel.textColor = .systemGray2
+        subtitleLabel.sizeToFit()
+
+        let titleView = UIView(frame: CGRectMake(0, 0, max(titleLabel.frame.size.width, subtitleLabel.frame.size.width), 30))
+        titleView.addSubview(titleLabel)
+        titleView.addSubview(subtitleLabel)
+
+        let widthDiff = subtitleLabel.frame.size.width - titleLabel.frame.size.width
+
+        if widthDiff < 0 {
+            let newX = widthDiff / 2
+            subtitleLabel.frame.origin.x = abs(newX)
+        } else {
+            let newX = widthDiff / 2
+            titleLabel.frame.origin.x = newX
+        }
+
+        return titleView
+    }
+    
     private func setupTableView() {
+        
+        contactsControllerTableView.delegate = self
+        
+        contactsControllerTableView.dataSource = self
         
         view.addSubview(contactsControllerTableView)
         
-        contactsControllerTableView.register(UITableViewCell.self, forCellReuseIdentifier: "ContactsTableViewCell")
+        contactsControllerTableView.register(UserTableViewCell.self, forCellReuseIdentifier: UserTableViewCell.reuseIdentifier)
         
         contactsControllerTableView.allowsMultipleSelection = true
         
@@ -178,11 +217,18 @@ extension ContactsViewController: UITableViewDelegate, UITableViewDataSource {
         
         let selectedUser = users[indexPath.row]
                 
-        let cell = UITableViewCell(style: .default, reuseIdentifier: "ContactsTableViewCell")
-                            
-        cell.textLabel?.text = selectedUser.name
+        let cell = contactsControllerTableView.dequeueReusableCell(withIdentifier: UserTableViewCell.reuseIdentifier, for: indexPath) as! UserTableViewCell
+        
+        cell.userNameLabel.text = selectedUser.name
         
         return cell
+        
+    }
+    
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        
+        return 75.0
         
     }
     
@@ -209,5 +255,4 @@ extension ContactsViewController: UITableViewDelegate, UITableViewDataSource {
         
     }
 
-    
 }

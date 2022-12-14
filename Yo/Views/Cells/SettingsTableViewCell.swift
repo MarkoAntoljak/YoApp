@@ -7,9 +7,9 @@
 
 import UIKit
 
-class ProfileTableViewCell: UITableViewCell {
+class SettingsTableViewCell: UITableViewCell {
 
-    static let reuseIdentifier = "ProfileCell"
+    static let reuseIdentifier = "SettingsCell"
     
     let iconImageView = UIImageView(frame: .zero)
     

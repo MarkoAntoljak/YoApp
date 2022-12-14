@@ -9,7 +9,7 @@ import UIKit
 
 import SafariServices
 
-class ProfileViewController: UIViewController {
+class ProfileSettingsViewController: UIViewController {
     
     
     let settingsCellData = [
@@ -26,7 +26,7 @@ class ProfileViewController: UIViewController {
         
     let usernameLabel = UILabel()
     
-    let logoFooterLabel = UILabel()
+    let footerLogoImageView = UIImageView()
     
     let footerStackView = UIStackView()
     
@@ -45,13 +45,7 @@ class ProfileViewController: UIViewController {
 
         setupTableView()
         
-        setupStackView()
-        
-        setupLogoFooter()
-        
-        setupTermsFooter()
-        
-        setupPrivacyFooter()
+        setupFooter()
         
         setupUsername()
         
@@ -69,9 +63,19 @@ class ProfileViewController: UIViewController {
     }
     
     
-    func setupStackView() {
+    func setupFooter() {
+        
+        footerStackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        footerLogoImageView.translatesAutoresizingMaskIntoConstraints = false
         
         view.addSubview(footerStackView)
+        
+        view.addSubview(footerLogoImageView)
+        
+        footerLogoImageView.image = UIImage(named: "YO!")
+        
+        footerLogoImageView.contentMode = .scaleAspectFit
         
         footerStackView.axis = .horizontal
         
@@ -79,21 +83,45 @@ class ProfileViewController: UIViewController {
         
         footerStackView.spacing = 20
         
-        footerStackView.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-        
-            footerStackView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100),
-            footerStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            footerStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            footerStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
-        
-        ])
-        
         footerStackView.addArrangedSubview(privacyButton)
         
         footerStackView.addArrangedSubview(termsButton)
         
+        NSLayoutConstraint.activate([
+            
+            footerLogoImageView.bottomAnchor.constraint(equalTo: footerStackView.topAnchor, constant: -30),
+            footerLogoImageView.heightAnchor.constraint(equalToConstant: 20),
+            
+            footerLogoImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            
+            footerStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10),
+            footerStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            footerStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            footerStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            
+            
+        ])
+        
+        termsButton.setTitle("Terms", for: .normal)
+        
+        privacyButton.setTitle("Privacy", for: .normal)
+        
+        termsButton.setTitleColor(.systemPurple, for: .normal)
+        
+        privacyButton.setTitleColor(.systemPurple, for: .normal)
+        
+        termsButton.contentHorizontalAlignment = .left
+        
+        privacyButton.contentHorizontalAlignment = .right
+        
+        termsButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 12)
+        
+        privacyButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 12)
+
+        termsButton.addTarget(self, action: #selector(termsTapped), for: .touchUpInside)
+        
+        privacyButton.addTarget(self, action: #selector(privacyTapped), for: .touchUpInside)
+                        
     }
     
     
@@ -115,70 +143,12 @@ class ProfileViewController: UIViewController {
         
         NSLayoutConstraint.activate([
         
-            usernameLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 250),
+            usernameLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -70),
             usernameLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             usernameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             usernameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
             
         ])
-        
-    }
-    
-    
-    private func setupLogoFooter() {
-        
-        logoFooterLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        view.addSubview(logoFooterLabel)
-        
-        logoFooterLabel.text = "YO!"
-        
-        logoFooterLabel.numberOfLines = 0
-        
-        logoFooterLabel.tintColor = .label
-        
-        logoFooterLabel.textAlignment = .center
-        
-        logoFooterLabel.font = .boldSystemFont(ofSize: 24)
-        
-        NSLayoutConstraint.activate([
-            
-            logoFooterLabel.bottomAnchor.constraint(equalTo: footerStackView.topAnchor, constant: -30),
-            logoFooterLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            logoFooterLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            logoFooterLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
-            
-        ])
-        
-    }
-    
-    
-    private func setupTermsFooter() {
-        
-        termsButton.setTitle("Terms", for: .normal)
-        
-        termsButton.contentHorizontalAlignment = .left
-        
-        termsButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 12)
-        
-        termsButton.addTarget(self, action: #selector(termsTapped), for: .touchUpInside)
-        
-        termsButton.setTitleColor(.systemPurple, for: .normal)
-        
-    }
-    
-    
-    private func setupPrivacyFooter() {
-        
-        privacyButton.setTitle("Privacy", for: .normal)
-        
-        privacyButton.contentHorizontalAlignment = .right
-        
-        privacyButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 12)
-        
-        privacyButton.addTarget(self, action: #selector(privacyTapped), for: .touchUpInside)
-        
-        privacyButton.setTitleColor(.systemPurple, for: .normal)
         
     }
     
@@ -208,14 +178,21 @@ class ProfileViewController: UIViewController {
         
     }
     
+
+}
+
+
+extension ProfileSettingsViewController: UITableViewDelegate, UITableViewDataSource {
     
-    private func setupTableView() {
+    
+    
+    func setupTableView() {
                 
         view.addSubview(settingsTableView)
         
         settingsTableView.translatesAutoresizingMaskIntoConstraints = false
         
-        settingsTableView.register(ProfileTableViewCell.self, forCellReuseIdentifier: ProfileTableViewCell.reuseIdentifier)
+        settingsTableView.register(SettingsTableViewCell.self, forCellReuseIdentifier: SettingsTableViewCell.reuseIdentifier)
         
         settingsTableView.isScrollEnabled = false
         
@@ -224,11 +201,7 @@ class ProfileViewController: UIViewController {
         settingsTableView.dataSource = self
         
     }
-
-}
-
-
-extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
+    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
@@ -236,9 +209,10 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         
     }
     
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = settingsTableView.dequeueReusableCell(withIdentifier: ProfileTableViewCell.reuseIdentifier, for: indexPath) as! ProfileTableViewCell
+        let cell = settingsTableView.dequeueReusableCell(withIdentifier: SettingsTableViewCell.reuseIdentifier, for: indexPath) as! SettingsTableViewCell
                             
         cell.titleLabel.text = settingsCellData[indexPath.row].title
         
