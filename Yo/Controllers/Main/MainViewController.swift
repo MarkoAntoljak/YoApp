@@ -16,10 +16,8 @@ class MainViewController: UIViewController {
         guard let uid = UserDefaults.standard.string(forKey: "userUID") else {return nil}
         return uid
     }
-
-
+    
     override func viewDidLoad() {
-        
         super.viewDidLoad()
 
         configureMainViewController()
@@ -37,12 +35,12 @@ class MainViewController: UIViewController {
         let scheduler = DLNotificationScheduler()
         scheduler.scheduleNotification(notification: dailyNotification)
         scheduler.scheduleAllNotifications()
+        
     }
     
-    
-    func configureMainViewController() {
+    private func configureMainViewController() {
         
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = constants.mainColor
         
         let addButton = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(closeButtonTapped))
         
@@ -51,11 +49,8 @@ class MainViewController: UIViewController {
         navigationItem.rightBarButtonItem = addButton
         
     }
-    
-    
-    @objc func closeButtonTapped() {
-        
-        print("Tapped!")
+    @objc
+    private func closeButtonTapped() {
         
         AuthManager.shared.signOut { [weak self] success in
             
