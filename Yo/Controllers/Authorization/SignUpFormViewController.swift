@@ -244,10 +244,6 @@ class SignUpFormViewController: UIViewController {
     // validating user input
     private func validateInput() {
         
-//        print(firstNameField.text!)
-//        print(lastNameField.text!)
-//        print(emailField.text!)
-        
         guard let firstName = firstNameField.text,
               let lastName = lastNameField.text,
               let email = emailField.text,
@@ -265,12 +261,10 @@ class SignUpFormViewController: UIViewController {
         }
         
         // if validation is good register user
-        registerUser(firstName: "Marko", lastName: "Antoljak", email: "")
+        registerUser(firstName: firstName, lastName: lastName, email: email)
     }
     // registering new user
     private func registerUser(firstName: String, lastName: String, email: String) {
-        
-        validateInput()
         
         guard let userUID = UserDefaults.standard.string(forKey: "userUID") else {return}
         
@@ -280,7 +274,6 @@ class SignUpFormViewController: UIViewController {
             guard let strongSelf = self else {return}
             
             if success {
-                
                 // show success animation
                 DispatchQueue.main.async {
                     strongSelf.showSuccessAnimation()
@@ -294,14 +287,11 @@ class SignUpFormViewController: UIViewController {
                 }
                 
             } else {
-                
                 strongSelf.constants.presentError(title: "Error", message: "There was a problem. Try again.", target: strongSelf)
             }
         }
         
     }
-
-    
 }
 // MARK: Text Field Delegate
 extension SignUpFormViewController: UITextFieldDelegate {
@@ -320,10 +310,7 @@ extension SignUpFormViewController: UITextFieldDelegate {
             
             emailField.resignFirstResponder()
             
-            // show success animation
-            DispatchQueue.main.async { [weak self] in
-                self?.showSuccessAnimation()
-            }
+            validateInput()
         }
         return true
     }

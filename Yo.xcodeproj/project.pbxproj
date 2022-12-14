@@ -92,7 +92,6 @@
 				9DA87AB22944B02700D7E29E /* Managers */,
 				6792B571294494D80033165E /* Info.plist */,
 				9DA87AA82944AE1100D7E29E /* Resources */,
-				9DA87AA72944AE0C00D7E29E /* Models */,
 				9DA87AA62944AE0600D7E29E /* Controllers */,
 				9DA87AA52944AE0000D7E29E /* Views */,
 			);
@@ -115,13 +114,6 @@
 				9DA87AA92944AE3100D7E29E /* Main */,
 			);
 			path = Controllers;
-			sourceTree = "<group>";
-		};
-		9DA87AA72944AE0C00D7E29E /* Models */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Models;
 			sourceTree = "<group>";
 		};
 		9DA87AA82944AE1100D7E29E /* Resources */ = {
