@@ -20,20 +20,12 @@ class RequestsViewController: UIViewController {
         
         view.backgroundColor = .systemBackground
         
-        viewDidLayoutSubviews()
-        
-    }
-    
-    
-    override func viewDidLayoutSubviews() {
-        
-        super.viewDidLayoutSubviews()
-        
         navigationItem.title = "Your YOs"
         
         setupTableView()
         
     }
+
     
 }
 

@@ -41,8 +41,6 @@ class ProfileSettingsViewController: UIViewController {
         
         view.backgroundColor = .systemBackground
         
-        viewDidLayoutSubviews()
-
         setupTableView()
         
         setupFooter()
@@ -51,6 +49,7 @@ class ProfileSettingsViewController: UIViewController {
         
     }
     
+    // MARK: Here we need to put this inside here because we are setting CGRect coordinates and the way to do that by using another subview's frame can only be done inside here
     
     override func viewDidLayoutSubviews() {
         

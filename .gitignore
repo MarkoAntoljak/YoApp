@@ -1,0 +1,11 @@
+.DS_Store
+# macOS
+.DS_Store
+
+# Xcode
+*xcuserdata
+
+# Derived data folder
+/DerivedData/
+
+Pods

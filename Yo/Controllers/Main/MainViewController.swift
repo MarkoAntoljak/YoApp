@@ -18,9 +18,7 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
         
         setupMainViewController()
-        
-        viewDidLayoutSubviews()
-        
+                
         setupMainTableView()
         
     }

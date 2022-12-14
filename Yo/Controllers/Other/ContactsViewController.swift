@@ -58,9 +58,7 @@ class ContactsViewController: UIViewController {
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        
-        viewDidLayoutSubviews()
-        
+                
         setupViewController()
         
         setupNavbar()
