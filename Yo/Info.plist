@@ -5,12 +5,12 @@
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
+			<key>CFBundleURLName</key>
+			<string>com.Tomi.YoApp</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>app-1-910201107184-ios-e287a351cf9d46d062c835</string>
 			</array>
-			<key>CFBundleURLName</key>
-			<string>com.Tomi.YoApp</string>
 		</dict>
 	</array>
 	<key>UIApplicationSceneManifest</key>

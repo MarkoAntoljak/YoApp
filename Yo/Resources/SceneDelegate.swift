@@ -68,7 +68,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             
             requestsViewController.tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "star"), tag: 1)
             
-            requestsViewController.title = ""
+            requestsViewController.title = "Requests"
             
             return UINavigationController(rootViewController: requestsViewController)
             

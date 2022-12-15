@@ -7,6 +7,8 @@
 
 import UIKit
 
+import SnapKit
+
 import SafariServices
 
 class ProfileSettingsViewController: UIViewController {
@@ -18,185 +20,103 @@ class ProfileSettingsViewController: UIViewController {
         SettingsCell(title: "Share", image: UIImage(systemName: "square.and.arrow.up.fill")!),
         SettingsCell(title: "Rate", image: UIImage(systemName: "star.fill")!),
         SettingsCell(title: "Contact Us", image: UIImage(systemName: "phone.fill")!),
+        SettingsCell(title: "Privacy Policy", image: UIImage(systemName: "checkmark.seal.fill")!),
+        SettingsCell(title: "Terms & Conditions", image: UIImage(systemName: "lock.rectangle")!),
+        SettingsCell(title: "Logout", image: UIImage(systemName: "rectangle.portrait.and.arrow.right.fill")!),
+        SettingsCell(title: "Delete account", image: UIImage(systemName: "delete.backward.fill")!),
         
     ]
     
-    
     let settingsTableView = UITableView()
         
-    let usernameLabel = UILabel()
+    let usernameLabel = UILabel(frame: .zero)
+    let profileImageView = UIImageView(frame: .zero)
     
-    let footerLogoImageView = UIImageView()
-    
-    let footerStackView = UIStackView()
-    
-    let privacyButton = UIButton()
-    
-    let termsButton = UIButton()
-    
-
     override func viewDidLoad() {
         
         super.viewDidLoad()
         
         view.backgroundColor = .systemBackground
-        
+                
         setupTableView()
-        
-        setupFooter()
         
         setupUsername()
         
+        setupProfileImage()
+                
     }
-    
-    // MARK: Here we need to put this inside here because we are setting CGRect coordinates and the way to do that by using another subview's frame can only be done inside here
+
+    // MARK: - all frame, resizing, layout stuff goes in here
     
     override func viewDidLayoutSubviews() {
-        
+
         super.viewDidLayoutSubviews()
-                
-        let tableViewOffset = usernameLabel.frame.origin.y + usernameLabel.frame.height + 50
         
-        settingsTableView.frame = CGRect(x: 0, y: tableViewOffset, width: view.frame.width, height: view.frame.height)
+        [settingsTableView, profileImageView, usernameLabel].forEach { subview in view.addSubview(subview) }
+
+        setupConstraints()
         
     }
     
     
-    func setupFooter() {
+    func setupConstraints() {
         
-        footerStackView.translatesAutoresizingMaskIntoConstraints = false
-        
-        footerLogoImageView.translatesAutoresizingMaskIntoConstraints = false
-        
-        view.addSubview(footerStackView)
-        
-        view.addSubview(footerLogoImageView)
-        
-        footerLogoImageView.image = UIImage(named: "YO!")
-        
-        footerLogoImageView.contentMode = .scaleAspectFit
-        
-        footerStackView.axis = .horizontal
-        
-        footerStackView.distribution = .fillEqually
-        
-        footerStackView.spacing = 20
-        
-        footerStackView.addArrangedSubview(privacyButton)
-        
-        footerStackView.addArrangedSubview(termsButton)
-        
-        NSLayoutConstraint.activate([
+        profileImageView.snp.makeConstraints { make in
             
-            footerLogoImageView.bottomAnchor.constraint(equalTo: footerStackView.topAnchor, constant: -30),
-            footerLogoImageView.heightAnchor.constraint(equalToConstant: 20),
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(40)
+            make.centerX.equalToSuperview()
+            make.height.width.equalTo(150)
             
-            footerLogoImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+        }
+        
+        usernameLabel.snp.makeConstraints { make in
             
-            footerStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10),
-            footerStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            footerStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            footerStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            make.top.equalTo(profileImageView.snp.bottom).offset(15)
+            make.centerX.equalToSuperview()
             
+        }
+        
+        settingsTableView.snp.makeConstraints { make in
             
-        ])
+            make.top.equalTo(usernameLabel.snp.bottom).offset(40)
+            make.width.height.equalTo(view.width)
+            
+        }
         
-        termsButton.setTitle("Terms", for: .normal)
-        
-        privacyButton.setTitle("Privacy", for: .normal)
-        
-        termsButton.setTitleColor(.systemPurple, for: .normal)
-        
-        privacyButton.setTitleColor(.systemPurple, for: .normal)
-        
-        termsButton.contentHorizontalAlignment = .left
-        
-        privacyButton.contentHorizontalAlignment = .right
-        
-        termsButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 12)
-        
-        privacyButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 12)
-
-        termsButton.addTarget(self, action: #selector(termsTapped), for: .touchUpInside)
-        
-        privacyButton.addTarget(self, action: #selector(privacyTapped), for: .touchUpInside)
-                        
     }
     
     
     private func setupUsername() {
-        
-        usernameLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        view.addSubview(usernameLabel)
-        
-        usernameLabel.textAlignment = .center
-        
-        usernameLabel.textColor = .label
-        
-        usernameLabel.numberOfLines = 0
-        
-        usernameLabel.font = .boldSystemFont(ofSize: 26)
                 
-        usernameLabel.text = "Tomi Ant"
-        
-        NSLayoutConstraint.activate([
-        
-            usernameLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -70),
-            usernameLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            usernameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            usernameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
-            
-        ])
+        usernameLabel.textAlignment = .center
+        usernameLabel.textColor = .label
+        usernameLabel.numberOfLines = 0
+        usernameLabel.font = .boldSystemFont(ofSize: 26)
+        usernameLabel.text = "Jeanine, 24"
         
     }
     
     
-    @objc func privacyTapped() {
+    private func setupProfileImage() {
         
-        DispatchQueue.main.async {
-            
-            let viewController = SFSafariViewController(url: URL(string: "https://www.tesla.com")!)
-            
-            self.present(viewController, animated: true)
-            
-        }
+        profileImageView.image = UIImage(named: "girl")
+        profileImageView.contentMode = .scaleAspectFill
+        
+        profileImageView.layer.cornerRadius = 80
+        profileImageView.clipsToBounds = true
         
     }
     
     
-    @objc func termsTapped() {
-        
-        DispatchQueue.main.async {
-            
-            let viewController = SFSafariViewController(url: URL(string: "https://www.tesla.com")!)
-            
-            self.present(viewController, animated: true)
-            
-        }
-        
-    }
-    
-
 }
 
 
 extension ProfileSettingsViewController: UITableViewDelegate, UITableViewDataSource {
     
-    
-    
     func setupTableView() {
-                
-        view.addSubview(settingsTableView)
-        
-        settingsTableView.translatesAutoresizingMaskIntoConstraints = false
         
         settingsTableView.register(SettingsTableViewCell.self, forCellReuseIdentifier: SettingsTableViewCell.reuseIdentifier)
-        
-        settingsTableView.isScrollEnabled = false
-        
         settingsTableView.delegate = self
-        
         settingsTableView.dataSource = self
         
     }
@@ -212,13 +132,8 @@ extension ProfileSettingsViewController: UITableViewDelegate, UITableViewDataSou
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = settingsTableView.dequeueReusableCell(withIdentifier: SettingsTableViewCell.reuseIdentifier, for: indexPath) as! SettingsTableViewCell
-                            
         cell.titleLabel.text = settingsCellData[indexPath.row].title
-        
         cell.iconImageView.image = settingsCellData[indexPath.row].image
-        
-        cell.accessoryType = .disclosureIndicator
-        
         return cell
         
     }
@@ -227,6 +142,45 @@ extension ProfileSettingsViewController: UITableViewDelegate, UITableViewDataSou
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         settingsTableView.deselectRow(at: indexPath, animated: true)
+        
+        let cellNumber = indexPath.row
+        
+        let safariVC = SFSafariViewController(url: URL(string: "https://www.blabla.com")!)
+        
+        switch cellNumber {
+            
+        case 0:
+            
+            guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else {
+                        return
+                    }
+            UIApplication.shared.open(settingsUrl)
+            
+        case 1:
+            present(safariVC, animated: true)
+            
+        case 2:
+            present(safariVC, animated: true)
+            
+        case 3:
+            present(safariVC, animated: true)
+            
+        case 4:
+            present(safariVC, animated: true)
+            
+        case 5:
+            present(safariVC, animated: true)
+            
+        case 6:
+            present(safariVC, animated: true)
+            
+        case 7:
+            present(safariVC, animated: true)
+        
+        default:
+            return
+            
+        }
         
     }
     
