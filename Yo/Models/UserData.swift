@@ -11,25 +11,13 @@ struct UserData {
     
     static let users: [User] = [
     
-        User(name: "Tomi Antoljak", dateAndTimeSent: nil),
-        User(name: "Irena Antoljak", dateAndTimeSent: nil),
-        User(name: "Borna Bjelkic", dateAndTimeSent: nil),
-        User(name: "Petra Bjelkic", dateAndTimeSent: nil),
-        User(name: "Marko Antoljak", dateAndTimeSent: nil),
-        User(name: "Ronzdvad Amad Konstranititis", dateAndTimeSent: nil),
-        User(name: "Pero Peric", dateAndTimeSent: nil),
-        User(name: "Consta Constatin", dateAndTimeSent: nil),
-        User(name: "Mahi Mahic", dateAndTimeSent: nil),
-        User(name: "Tits Titis", dateAndTimeSent: nil),
-        User(name: "Halo Malo", dateAndTimeSent: nil),
-        User(name: "Aca Lukas", dateAndTimeSent: nil),
-        User(name: "Nesto Nestokovic", dateAndTimeSent: nil),
-        User(name: "Pijanac Pijani", dateAndTimeSent: nil),
-        User(name: "Ker Kerovic", dateAndTimeSent: nil),
-        User(name: "He Hi", dateAndTimeSent: nil),
-        User(name: "Sasa Sasa", dateAndTimeSent: nil),
-        User(name: "Kanabanakanana Kabanaanratonakana", dateAndTimeSent: nil),
-        User(name: "Susi Suis", dateAndTimeSent: nil)
+        User(firstName: "Marko", lastName: "Antoljak", phoneNumber: "+ 1 (551) 344 9152", email: ""),
+        User(firstName: "Jeff", lastName: "Bezos", phoneNumber: "+ 1 (551) 374 9152", email: ""),
+        User(firstName: "Elon", lastName: "Musk", phoneNumber: "+ 1 (551) 394 9152", email: ""),
+        User(firstName: "Jordan", lastName: "Peterson", phoneNumber: "+ 1 (551) 354 9152", email: ""),
+        User(firstName: "Steph", lastName: "Curry", phoneNumber: "+ 1 (551) 244 9152", email: ""),
+        User(firstName: "Micael", lastName: "Jordan", phoneNumber: "+ 1 (551) 744 9152", email: ""),
+        User(firstName: "Tomi", lastName: "Antoljak", phoneNumber: "+ 1 (551) 784 9152", email: "")
         
     ]
     

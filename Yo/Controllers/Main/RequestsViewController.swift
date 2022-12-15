@@ -20,6 +20,8 @@ class RequestsViewController: UIViewController {
         
         view.backgroundColor = .systemBackground
         
+        navigationController?.navigationBar.backgroundColor = .systemBackground
+        
         navigationItem.title = "Your YOs"
         
         setupTableView()
@@ -32,15 +34,18 @@ class RequestsViewController: UIViewController {
 
 extension RequestsViewController: UITableViewDelegate, UITableViewDataSource, RequestTableViewCellDelegate {
     
-    
-    
     func setupTableView() {
         
         requestsTableView.translatesAutoresizingMaskIntoConstraints = false
         
         view.addSubview(requestsTableView)
         
-        requestsTableView.frame = CGRect(x: 0, y: 110, width: view.frame.width, height: view.frame.height)
+        requestsTableView.snp.makeConstraints { make in
+            make.width.equalToSuperview()
+            make.centerX.equalToSuperview()
+            make.top.equalTo(view.snp.top)
+            make.height.equalTo(view.snp.height).offset(-(navigationController?.tabBarController?.tabBar.height ?? 100))
+        }
         
         requestsTableView.delegate = self
         
@@ -66,7 +71,7 @@ extension RequestsViewController: UITableViewDelegate, UITableViewDataSource, Re
     
         cell.requestTableViewCellDelegate = self
         
-        cell.usernameLabel.text = currentUser.name
+        cell.usernameLabel.text = currentUser.fullName
         
         return cell
         

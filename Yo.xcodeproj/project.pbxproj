@@ -12,6 +12,9 @@
 		6792B566294494D80033165E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6792B565294494D80033165E /* SceneDelegate.swift */; };
 		6792B56D294494D80033165E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6792B56C294494D80033165E /* Assets.xcassets */; };
 		6792B570294494D80033165E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6792B56E294494D80033165E /* LaunchScreen.storyboard */; };
+		9D591D01294B2D980046C858 /* CustomUITabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D591D00294B2D980046C858 /* CustomUITabBarController.swift */; };
+		9D591D03294B3E190046C858 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D591D02294B3E190046C858 /* TabBarController.swift */; };
+		9D591D05294B61EF0046C858 /* ExistingUsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D591D04294B61EF0046C858 /* ExistingUsersViewController.swift */; };
 		9DA87AAD2944AE6800D7E29E /* PhoneNumberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA87AAC2944AE6800D7E29E /* PhoneNumberViewController.swift */; };
 		9DA87AB42944B03200D7E29E /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA87AB32944B03200D7E29E /* AuthManager.swift */; };
 		9DA87AB62944B1D700D7E29E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA87AB52944B1D700D7E29E /* Constants.swift */; };
@@ -46,6 +49,9 @@
 		6792B56C294494D80033165E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6792B56F294494D80033165E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6792B571294494D80033165E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9D591D00294B2D980046C858 /* CustomUITabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomUITabBarController.swift; sourceTree = "<group>"; };
+		9D591D02294B3E190046C858 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		9D591D04294B61EF0046C858 /* ExistingUsersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExistingUsersViewController.swift; sourceTree = "<group>"; };
 		9D7461832949D30900F2681D /* Yo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Yo.entitlements; sourceTree = "<group>"; };
 		9DA87AAC2944AE6800D7E29E /* PhoneNumberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumberViewController.swift; sourceTree = "<group>"; };
 		9DA87AB32944B03200D7E29E /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
@@ -152,9 +158,10 @@
 		9DA87AA92944AE3100D7E29E /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				9D591D02294B3E190046C858 /* TabBarController.swift */,
 				9DF23734294B18E6009DC875 /* MainViewController.swift */,
-				9DF2374C294B1CB4009DC875 /* ProfileSettingsViewController.swift */,
 				9DF2374D294B1CB4009DC875 /* RequestsViewController.swift */,
+				9DF2374C294B1CB4009DC875 /* ProfileSettingsViewController.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -184,6 +191,7 @@
 				9DA87ABE2947522F00D7E29E /* YoPhoneCodeTextField.swift */,
 				9DA87AC02947672500D7E29E /* YoDetailedInfoFormView.swift */,
 				9DD47C802949C77500694083 /* YoSignUpTextField.swift */,
+				9D591D00294B2D980046C858 /* CustomUITabBarController.swift */,
 			);
 			path = "Custom UI";
 			sourceTree = "<group>";
@@ -212,6 +220,7 @@
 			isa = PBXGroup;
 			children = (
 				9DF2374A294B19FC009DC875 /* ContactsViewController.swift */,
+				9D591D04294B61EF0046C858 /* ExistingUsersViewController.swift */,
 			);
 			path = Other;
 			sourceTree = "<group>";
@@ -351,6 +360,7 @@
 			files = (
 				9DA87AB82944B2A600D7E29E /* Extensions.swift in Sources */,
 				9DF2374B294B19FC009DC875 /* ContactsViewController.swift in Sources */,
+				9D591D01294B2D980046C858 /* CustomUITabBarController.swift in Sources */,
 				9DF2374F294B1CB4009DC875 /* RequestsViewController.swift in Sources */,
 				9DF23737294B18E6009DC875 /* MainViewController.swift in Sources */,
 				9DD47C812949C77500694083 /* YoSignUpTextField.swift in Sources */,
@@ -364,6 +374,8 @@
 				9DA87ABC2947358700D7E29E /* SignUpFormViewController.swift in Sources */,
 				6792B564294494D80033165E /* AppDelegate.swift in Sources */,
 				9DF23740294B18F5009DC875 /* UserData.swift in Sources */,
+				9D591D03294B3E190046C858 /* TabBarController.swift in Sources */,
+				9D591D05294B61EF0046C858 /* ExistingUsersViewController.swift in Sources */,
 				9DA87AAD2944AE6800D7E29E /* PhoneNumberViewController.swift in Sources */,
 				6792B566294494D80033165E /* SceneDelegate.swift in Sources */,
 				9DF23747294B19CF009DC875 /* UserTableViewCell.swift in Sources */,
