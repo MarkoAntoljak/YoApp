@@ -13,7 +13,6 @@ import SafariServices
 
 class ProfileSettingsViewController: UIViewController {
     
-    
     let settingsCellData = [
     
         SettingsCell(title: "Notifications", image: UIImage(systemName: "bell.fill")!),
@@ -29,8 +28,10 @@ class ProfileSettingsViewController: UIViewController {
     
     let settingsTableView = UITableView()
         
-    let usernameLabel = UILabel(frame: .zero)
-    let profileImageView = UIImageView(frame: .zero)
+    let usernameLabel = UILabel()
+    let profileImageView = UIImageView()
+    
+    let editButton = UIButton()
     
     override func viewDidLoad() {
         
@@ -43,6 +44,8 @@ class ProfileSettingsViewController: UIViewController {
         setupUsername()
         
         setupProfileImage()
+        
+        setupEditIcon()
                 
     }
 
@@ -52,7 +55,7 @@ class ProfileSettingsViewController: UIViewController {
 
         super.viewDidLayoutSubviews()
         
-        [settingsTableView, profileImageView, usernameLabel].forEach { subview in view.addSubview(subview) }
+        [settingsTableView, profileImageView, usernameLabel, editButton].forEach { subview in view.addSubview(subview) }
 
         setupConstraints()
         
@@ -66,6 +69,13 @@ class ProfileSettingsViewController: UIViewController {
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(40)
             make.centerX.equalToSuperview()
             make.height.width.equalTo(150)
+            
+        }
+        
+        editButton.snp.makeConstraints { make in
+
+            make.leading.equalTo(profileImageView.snp.centerX).offset(35)
+            make.top.equalTo(profileImageView.snp.bottom).offset(-20)
             
         }
         
@@ -107,6 +117,27 @@ class ProfileSettingsViewController: UIViewController {
         
     }
     
+    
+    private func setupEditIcon() {
+        
+        editButton.setImage(UIImage(systemName: "pencil"), for: .normal)
+        editButton.addTarget(self, action: #selector(editImageTapped), for: .touchUpInside)
+        
+    }
+    
+    
+    @objc func editImageTapped() {
+        
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        alertController.addAction(UIAlertAction(title: "Camera", style: .default, handler: openCameraButton(action:)))
+        alertController.addAction(UIAlertAction(title: "Photo Library", style: .default, handler: openPhotoLibrary(action:)))
+        
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        
+        present(alertController, animated: true)
+        
+    }
     
 }
 
@@ -179,6 +210,48 @@ extension ProfileSettingsViewController: UITableViewDelegate, UITableViewDataSou
         
         default:
             return
+            
+        }
+        
+    }
+    
+}
+
+
+extension ProfileSettingsViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func openCameraButton(action: UIAlertAction) {
+        
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            
+            let imagePicker = UIImagePickerController()
+            
+            imagePicker.delegate = self
+            
+            imagePicker.sourceType = .camera
+            
+            imagePicker.allowsEditing = true
+            
+            self.present(imagePicker, animated: true)
+            
+        }
+        
+    }
+    
+    
+    func openPhotoLibrary(action: UIAlertAction) {
+        
+        if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
+            
+            let imagePicker = UIImagePickerController()
+            
+            imagePicker.delegate = self
+            
+            imagePicker.sourceType = .photoLibrary
+            
+            imagePicker.allowsEditing = true
+            
+            self.present(imagePicker, animated: true)
             
         }
         

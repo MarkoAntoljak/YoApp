@@ -516,7 +516,9 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Yo/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Yo;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Yo needs access to camera so you can take a profile picture.";
 				INFOPLIST_KEY_NSContactsUsageDescription = "Yo uses your contacts to send messages.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Yo wants to access your library to upload a profile picture.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -551,7 +553,9 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Yo/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Yo;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Yo needs access to camera so you can take a profile picture.";
 				INFOPLIST_KEY_NSContactsUsageDescription = "Yo uses your contacts to send messages.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Yo wants to access your library to upload a profile picture.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
