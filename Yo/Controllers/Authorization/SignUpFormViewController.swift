@@ -8,13 +8,20 @@
 import UIKit
 import SnapKit
 import Lottie
+import MaterialComponents
 
 class SignUpFormViewController: UIViewController {
     
     // MARK: Attributes
     private let constants = Constants.shared
     
-    private var animationView: LottieAnimationView?
+    private lazy var animationView: LottieAnimationView = {
+        let animation = LottieAnimationView(name: "finished_animation")
+        animation.contentMode = .scaleAspectFit
+        animation.loopMode = .loop
+        animation.isHidden = true
+        return animation
+    }()
     
     // MARK: UI Elements
     // finish button
@@ -63,7 +70,7 @@ class SignUpFormViewController: UIViewController {
         field.keyboardType = .emailAddress
         field.isHidden = false
         field.autocapitalizationType = .none
-        field.returnKeyType = .done
+        field.returnKeyType = .go
         field.placeholder = "(optional) we won't spam you;)"
         return field
     }()
@@ -82,8 +89,6 @@ class SignUpFormViewController: UIViewController {
         
         setEndEditing()
         
-        addAnimation()
-        
         emailField.delegate = self
         firstNameField.delegate = self
         lastNameField.delegate = self
@@ -101,33 +106,8 @@ class SignUpFormViewController: UIViewController {
         firstNameField.becomeFirstResponder()
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        
-        animationView!.stop()
-    }
-    
-    // MARK: View Functions
-    private func addAnimation() {
-        
-        animationView = .init(name: "finished_animation")
-         
-        animationView!.frame = view.bounds
-        
-        animationView!.contentMode = .scaleAspectFit
-        
-        animationView!.loopMode = .loop
-          
-        view.addSubview(animationView!)
-        
-        animationView!.isHidden = true
-    }
-    
+    // MARK: View Setup Functions
     private func showSuccessAnimation() {
-        
-        animationView!.isHidden = false
-        
-        animationView!.play()
         
         firstNameView.isHidden = true
         lastNameView.isHidden = true
@@ -138,6 +118,9 @@ class SignUpFormViewController: UIViewController {
         button.isHidden = true
         
         navigationItem.title = ""
+        
+        animationView.isHidden = false
+        animationView.play()
     }
     
     private func configureNavBar() {
@@ -160,6 +143,8 @@ class SignUpFormViewController: UIViewController {
         view.addSubview(firstNameView)
         view.addSubview(lastNameView)
         view.addSubview(emailView)
+        view.addSubview(animationView)
+
     }
     
     // ending editing on tap
@@ -201,7 +186,7 @@ class SignUpFormViewController: UIViewController {
             make.width.equalTo(350)
             make.height.equalTo(55)
             make.centerX.equalTo(view.center.x)
-            make.centerY.equalTo(view.height - 55)
+            make.centerY.equalTo(view.snp.bottom).offset(-55)
         }
         
         firstNameView.snp.makeConstraints { make in
@@ -223,6 +208,7 @@ class SignUpFormViewController: UIViewController {
             make.centerY.equalTo(495)
         }
         
+        animationView.frame = view.bounds
     }
     
     // MARK: Actions
@@ -244,6 +230,8 @@ class SignUpFormViewController: UIViewController {
     // validating user input
     private func validateInput() {
         
+        button.backgroundColor = .black.withAlphaComponent(0.2)
+        
         guard let firstName = firstNameField.text,
               let lastName = lastNameField.text,
               let email = emailField.text,
@@ -252,11 +240,13 @@ class SignUpFormViewController: UIViewController {
 
             // if email is entered
             if emailField.text!.count > 1 && !emailField.text!.contains("@") {
+                button.backgroundColor = .black.withAlphaComponent(1)
                 constants.presentError(title: "Error", message: "Please input correct email.", target: self)
                 return
             }
 
             constants.presentError(title: "Error", message: "Please enter valid first and last name.", target: self)
+            button.backgroundColor = .black.withAlphaComponent(1)
             return
         }
         
@@ -274,20 +264,23 @@ class SignUpFormViewController: UIViewController {
             guard let strongSelf = self else {return}
             
             if success {
-                // show success animation
+                
                 DispatchQueue.main.async {
+                    // show success animation
                     strongSelf.showSuccessAnimation()
+                    
+                    // navigate to main screen
+                    let vc = TabBarController()
+                    vc.modalPresentationStyle = .fullScreen
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                        self?.animationView.stop()
+                        self?.present(vc, animated: true)
+                    }
                 }
-                // navigate to main screen
-                let navVC = UINavigationController(rootViewController: MainViewController())
-                navVC.modalPresentationStyle = .fullScreen
-                
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                    strongSelf.present(navVC, animated: true)
-                }
-                
             } else {
                 strongSelf.constants.presentError(title: "Error", message: "There was a problem. Try again.", target: strongSelf)
+                strongSelf.button.backgroundColor = .black.withAlphaComponent(1)
             }
         }
         

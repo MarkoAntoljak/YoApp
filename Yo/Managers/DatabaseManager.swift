@@ -15,6 +15,13 @@ struct DatabaseManager {
     
     private let database = Firestore.firestore()
     
+    private let cachedUser = NSCache<NSString, User>()
+    
+    enum ErrorType: Error {
+        
+        case ErrorGettingUser
+    }
+    
     // MARK: Functions
     // insert new user into database
     public func insertNewUser(userUID: String, firstName: String, lastName: String, email: String?, completion: @escaping (Bool) -> Void) {
@@ -41,29 +48,40 @@ struct DatabaseManager {
         
     }
     
-    public func getUserData(for userUID: String, completion: @escaping (Bool) -> Void) {
+    public func getCurrentUserData(for userUID: String, completion: @escaping (Result<User, Error>) -> Void) {
         
         database.collection("users").document(userUID).getDocument { snapshot, error in
             
+            // if current user is already cached
+            if let userObj = cachedUser.object(forKey: "currentUser") {
+                print("user is cached")
+                completion(.success(userObj))
+                return
+            }
+            
             guard let snapshot = snapshot, error == nil else {
                 print("Error: there was an error with snapshot or there is no user with uid: \(userUID)")
-                completion(false)
+                completion(.failure(ErrorType.ErrorGettingUser))
                 return
             }
             // get data from user document
             guard let data = snapshot.data(),
-                    let firstName = data["firstName"] as? String,
-                  let lastName = data["lastName"] as? String,
+                  let firstName = data["first_name"] as? String,
+                  let lastName = data["last_name"] as? String,
                   let email = data["email"] as? String,
-                  let phoneNumber = data["phone_number"]as? String else {
-                print("No user data")
-                completion(false)
+                  let phoneNumber = data["phone_number"] as? String else {
+                print("Error: wrong field, something is mising")
+                completion(.failure(ErrorType.ErrorGettingUser))
                 return
             }
-//
-//            let user = User(firstName: firstName, lastName: lastName, email: email, phoneNumber: phoneNumber)
-//            completion(user)
-            completion(true)
+            
+            let user = User(firstName: firstName, lastName: lastName, phoneNumber: phoneNumber, email: email)
+            
+            // cache user
+            self.cachedUser.setObject(user, forKey: "currentUser")
+            
+            completion(.success(user))
+            
         }
     }
     

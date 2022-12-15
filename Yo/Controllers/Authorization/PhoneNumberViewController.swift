@@ -144,7 +144,6 @@ class PhoneNumberViewController: UIViewController, UNUserNotificationCenterDeleg
             make.centerX.equalTo(view.center.x)
         }
         
-        
     }
     private func setActions() {
         
@@ -199,9 +198,12 @@ class PhoneNumberViewController: UIViewController, UNUserNotificationCenterDeleg
     // MARK: Validating user input
     private func validateInput() {
         
+        button.backgroundColor = .black.withAlphaComponent(0.2)
+        
         guard let input = textField.text, !input.isEmpty else {
             // show error
             constants.presentError(title: "Error", message: "Please input your phone number.", target: self)
+            button.backgroundColor = .black.withAlphaComponent(1)
             return
         }
         
@@ -214,6 +216,7 @@ class PhoneNumberViewController: UIViewController, UNUserNotificationCenterDeleg
         }
         catch {
             constants.presentError(title: "Error", message: "Please input correct phone number.", target: self)
+            button.backgroundColor = .black.withAlphaComponent(1)
             return
         }
         
@@ -234,6 +237,7 @@ class PhoneNumberViewController: UIViewController, UNUserNotificationCenterDeleg
                     title: "Error",
                     message: "There was an error while sending SMS Code. Please try again.",
                     target: strongSelf)
+                strongSelf.button.backgroundColor = .black.withAlphaComponent(1)
             }
         }
         

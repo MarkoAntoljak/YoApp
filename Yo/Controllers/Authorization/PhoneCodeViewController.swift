@@ -199,17 +199,17 @@ class PhoneCodeViewController: UIViewController {
                     
                     if exists {
                         
-                        DatabaseManager.shared.getUserData(for: userUID) { [weak self] user in
+                        DatabaseManager.shared.getCurrentUserData(for: userUID) { [weak self] user in
                             
                             guard let strongSelf = self else {return}
                             
                             // navigate to main screen if user exists
-                            let navVC = UINavigationController(rootViewController: MainViewController(/*user: user*/))
-                            navVC.modalPresentationStyle = .fullScreen
+                            let vc = TabBarController()
+                            vc.modalPresentationStyle = .fullScreen
                             
                             DispatchQueue.main.async {
                                 strongSelf.activityIndicator.stopAnimating()
-                                strongSelf.present(navVC, animated: true)
+                                strongSelf.present(vc, animated: true)
                             }
                         }
                         

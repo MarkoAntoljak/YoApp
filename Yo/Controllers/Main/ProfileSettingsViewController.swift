@@ -41,6 +41,10 @@ class ProfileSettingsViewController: UIViewController {
         
         view.backgroundColor = .systemBackground
         
+        navigationController?.navigationBar.backgroundColor = .systemBackground
+        
+        navigationItem.title = "Profile Settings"
+        
         setupTableView()
         
         setupFooter()
