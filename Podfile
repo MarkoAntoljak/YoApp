@@ -8,12 +8,14 @@ target 'Yo' do
 	pod 'FirebaseFirestore'
 	pod 'FirebaseAnalytics'
 	pod 'FirebaseAuth'
+	pod 'FirebaseMessaging'
 	# other libraries
 	pod 'SnapKit'
 	pod 'IQKeyboardManager'
 	pod 'ProgressHUD'
 	pod 'SDWebImage'
-	pod 'PhoneNumberKit', :git => 'https://github.com/marmelroy/PhoneNumberKit'
+	pod 'lottie-ios'
+	pod 'PhoneNumberKit'
 	
 	pod 'MaterialComponents/ActivityIndicator'
 end

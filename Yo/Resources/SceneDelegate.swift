@@ -52,7 +52,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     func setupProfileNavController() -> UINavigationController {
         
-        let profileViewController = ProfileViewController()
+        let profileViewController = ProfileSettingsViewController()
         
         profileViewController.tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "user"), tag: 1)
         
@@ -61,6 +61,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         return UINavigationController(rootViewController: profileViewController)
         
     }
+    
+    func setupRequestsNavController() -> UINavigationController {
+            
+            let requestsViewController = RequestsViewController()
+            
+            requestsViewController.tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "star"), tag: 1)
+            
+            requestsViewController.title = ""
+            
+            return UINavigationController(rootViewController: requestsViewController)
+            
+        }
     
     
     func setupTabBar() -> UITabBarController {
@@ -71,7 +83,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         UITabBar.appearance().backgroundColor = .systemBackground
         
-        tabBar.viewControllers = [setupMainNavController(), setupProfileNavController()]
+        tabBar.viewControllers = [setupMainNavController(), setupRequestsNavController(),setupProfileNavController()]
         
         return tabBar
         
