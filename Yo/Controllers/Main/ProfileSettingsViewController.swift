@@ -26,26 +26,26 @@ class ProfileSettingsViewController: UIViewController {
         
     ]
     
+    private let constants = Constants.shared
+    
     let settingsTableView = UITableView()
         
     let usernameLabel = UILabel()
     let profileImageView = UIImageView()
-    
-    let editButton = UIButton()
     
     override func viewDidLoad() {
         
         super.viewDidLoad()
         
         view.backgroundColor = .systemBackground
+        
+        navigationController?.navigationBar.backgroundColor = .systemBackground
                 
         setupTableView()
         
         setupUsername()
         
         setupProfileImage()
-        
-        setupEditIcon()
                 
     }
 
@@ -55,7 +55,7 @@ class ProfileSettingsViewController: UIViewController {
 
         super.viewDidLayoutSubviews()
         
-        [settingsTableView, profileImageView, usernameLabel, editButton].forEach { subview in view.addSubview(subview) }
+        [settingsTableView, profileImageView, usernameLabel].forEach { subview in view.addSubview(subview) }
 
         setupConstraints()
         
@@ -69,13 +69,6 @@ class ProfileSettingsViewController: UIViewController {
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(40)
             make.centerX.equalToSuperview()
             make.height.width.equalTo(150)
-            
-        }
-        
-        editButton.snp.makeConstraints { make in
-
-            make.leading.equalTo(profileImageView.snp.centerX).offset(35)
-            make.top.equalTo(profileImageView.snp.bottom).offset(-20)
             
         }
         
@@ -115,14 +108,9 @@ class ProfileSettingsViewController: UIViewController {
         profileImageView.layer.cornerRadius = 80
         profileImageView.clipsToBounds = true
         
-    }
-    
-    
-    private func setupEditIcon() {
-        
-        editButton.setImage(UIImage(systemName: "pencil"), for: .normal)
-        editButton.addTarget(self, action: #selector(editImageTapped), for: .touchUpInside)
-        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(editImageTapped))
+        profileImageView.isUserInteractionEnabled = true
+        profileImageView.addGestureRecognizer(tap)
     }
     
     
@@ -181,33 +169,42 @@ extension ProfileSettingsViewController: UITableViewDelegate, UITableViewDataSou
         switch cellNumber {
             
         case 0:
-            
+            // notification settings
             guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else {
                         return
                     }
             UIApplication.shared.open(settingsUrl)
             
         case 1:
+            // share app
             present(safariVC, animated: true)
-            
         case 2:
+            // rate the app
             present(safariVC, animated: true)
-            
         case 3:
-            present(safariVC, animated: true)
+            // contact us
+            let email = "tomi@joinhangoo.com"
+            if let url = URL(string: "mailto:\(email)") {
+              
+                UIApplication.shared.open(url)
+            }
             
         case 4:
+            // privacy policy
             present(safariVC, animated: true)
             
         case 5:
+            // terms & conditions
             present(safariVC, animated: true)
             
         case 6:
-            present(safariVC, animated: true)
+            // logout
+            signOut()
             
         case 7:
-            present(safariVC, animated: true)
-        
+            // delete account
+            deleteAccount()
+            
         default:
             return
             
@@ -256,5 +253,66 @@ extension ProfileSettingsViewController: UIImagePickerControllerDelegate, UINavi
         }
         
     }
+    
+    // MARK: User Logout and Account Deletion
+     //signing out the user
+    private func signOut() {
+        
+        AuthManager.shared.signOut { [weak self] success in
+            
+            guard let strongSelf = self else {return}
+            
+            if success {
+                // go back to signIn screen
+                DispatchQueue.main.async {
+                    
+                    let navVC = UINavigationController(rootViewController: PhoneNumberViewController())
+                    navVC.modalPresentationStyle = .fullScreen
+                    strongSelf.present(navVC, animated: true)
+                }
+                
+            } else {
+                strongSelf.constants.presentError(
+                    title: "Error",
+                    message: "There was a problem with sign out. Please try again.",
+                    target: strongSelf)
+            }
+        }
+    }
+    
+    private func deleteAccount() {
+        
+        guard let userUID = UserDefaults.standard.string(forKey: "userUID") else {
+            print("no userUID")
+            return
+        }
+        
+        DatabaseManager.shared.deleteUserAccount(for: userUID) {[weak self] success in
+            
+            guard let strongSelf = self else {return}
+            
+            if success {
+                
+                AuthManager.shared.signOut { success in
+                    
+                    if success {
+                        // go back to sign in screen
+                        DispatchQueue.main.async {
+                            let navc = UINavigationController(rootViewController: PhoneNumberViewController())
+                            navc.modalPresentationStyle = .fullScreen
+                            strongSelf.present(navc, animated: true)
+                        }
+                        
+                    } else {
+                        
+                        strongSelf.constants.presentError(title: "Error", message: "Cannot sign out the user", target: strongSelf)
+                    }
+                }
+            } else {
+                strongSelf.constants.presentError(title: "Error", message: "Cannot delete account", target: strongSelf)
+            }
+        }
+    }
+
     
 }

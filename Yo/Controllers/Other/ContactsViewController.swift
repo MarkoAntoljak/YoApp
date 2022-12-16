@@ -1,5 +1,5 @@
 //
-//  ContactPickerViewController.swift
+//  ContactsViewController.swift
 //  Yo
 //
 //  Created by Tomi Antoljak on 12/10/22.
@@ -8,42 +8,54 @@
 import UIKit
 
 import Contacts
+import MessageUI
 
-class ContactsViewController: UIViewController {
-    
+class ContactsViewController: UIViewController, MFMessageComposeViewControllerDelegate {
+        
     let navbar = UINavigationBar()
     
     let contactsControllerTableView = UITableView()
     
     var contacts: [String] = []
     
-    var selectedUsers: [String] = []
+    private let constants = Constants.shared
     
+    var contactPhoneNumbers: [String] = []
     
-    func fetchAllContacts() async {
+    func fetchAllContacts() {
         
         let store = CNContactStore()
         
-        let keys = [CNContactGivenNameKey, CNContactFamilyNameKey] as [CNKeyDescriptor]
+        let keys = [CNContactGivenNameKey, CNContactFamilyNameKey, CNContactPhoneNumbersKey] as [CNKeyDescriptor]
         
         let fetchRequest = CNContactFetchRequest(keysToFetch: keys)
         
-        do {
-            
-            try store.enumerateContacts(with: fetchRequest, usingBlock: { contact, result in
-                                
-                self.contacts.append("\(contact.givenName) \(contact.familyName)")
-                                
-            })
-            
-        } catch {
-            
-            self.showSettingsAlert()
-            
+        DispatchQueue.global(qos: .background).async { [weak self] in
+         
+            do {
+                
+                try store.enumerateContacts(with: fetchRequest, usingBlock: { contact, result in
+                                    
+                    self?.contacts.append("\(contact.givenName) \(contact.familyName)")
+                    
+                    self?.contactPhoneNumbers.append(contact.phoneNumbers.first?.value.stringValue ?? "")
+                                    
+                })
+                
+            } catch {
+                
+                self?.showSettingsAlert()
+                
+            }
         }
         
     }
     
+    override func loadView() {
+        super.loadView()
+        
+        fetchAllContacts()
+    }
     
     override func viewDidLoad() {
         
@@ -54,15 +66,17 @@ class ContactsViewController: UIViewController {
         setupNavbar()
         
         setupTableView()
-        
-        Task.init {
-            
-            await self.fetchAllContacts()
-            
-        }
                 
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        // do refresh on a main thread
+        DispatchQueue.main.async {
+            self.contactsControllerTableView.reloadData()
+        }
+    }
     
     override func viewDidLayoutSubviews() {
         
@@ -90,15 +104,11 @@ class ContactsViewController: UIViewController {
         
         let cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismissContactViewController))
         
-        let sendButton = UIBarButtonItem(title: "Send Yo", style: .done, target: self, action: #selector(sendButtonTapped))
-        
         let navItem = UINavigationItem(title: "Your contacts")
         
         navItem.leftBarButtonItem = cancelButton
         
-        navItem.rightBarButtonItem = sendButton
-        
-        navItem.titleView = setTitle(title: "Your contacts", subtitle: "Tap to select")
+        navItem.titleView = setTitle(title: "Your contacts", subtitle: "Tap to invite")
         
         navbar.items = [navItem]
         
@@ -166,25 +176,50 @@ class ContactsViewController: UIViewController {
                 UIApplication.shared.open(settings)
                 
             })
+            
+            alert.addAction(UIAlertAction(title: "Cancel", style: .destructive))
         }
         
         present(alert, animated: true)
     }
     
-    
+    // MARK: Button Actions
     @objc func dismissContactViewController() {
         
         dismiss(animated: true)
         
     }
     
-    
-    @objc func sendButtonTapped() {
+    // MARK: Send Messages Functions
+    private func displayMessageInterface(for userAt: Int) {
         
-        print("should open message to send a link")
+        let composeVC = MFMessageComposeViewController()
+        composeVC.messageComposeDelegate = self
         
+        composeVC.recipients = [contactPhoneNumbers[userAt]]
+        composeVC.body = "I invited you to YO App."
+        
+        // Present the view controller modally.
+        if MFMessageComposeViewController.canSendText() {
+            
+            DispatchQueue.main.async {
+                self.present(composeVC, animated: true, completion: nil)
+            }
+            
+        } else {
+            
+            constants.presentError(title: "Error", message: "Cannot send message", target: self)
+        }
     }
     
+    // when message is sent or cancel is pressed
+    func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
+        
+        controller.dismiss(animated: true)
+        
+    }
+
+
 }
 
 
@@ -219,21 +254,9 @@ extension ContactsViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let selectedUser = contacts[indexPath.row]
+        let selectedContact = contacts[indexPath.row]
         
-        if selectedUsers.contains(selectedUser) {
-            
-            tableView.cellForRow(at: indexPath)?.accessoryType = .none
-            
-            selectedUsers.removeAll { $0 == selectedUser }
-            
-        } else {
-            
-            tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
-            
-            selectedUsers.append(selectedUser)
-            
-        }
+        displayMessageInterface(for: indexPath.row)
         
         tableView.deselectRow(at: indexPath, animated: true)
         

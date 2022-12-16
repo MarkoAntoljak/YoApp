@@ -18,11 +18,11 @@ class MainViewController: UIViewController {
     private let constants = Constants.shared
     
     // MARK: UI Elements
-    let mainControllerTableView = UITableView()
+    private let mainControllerTableView = UITableView()
     
     private lazy var emptyStateBigLabel: UILabel = {
         let label = UILabel()
-        label.text = "No YO-s for now..."
+        label.text = "No YO-s for now...😱"
         label.font = .systemFont(ofSize: 24, weight: .black)
         label.textAlignment = .center
         label.textColor = .systemPurple.withAlphaComponent(0.7)
@@ -71,6 +71,12 @@ class MainViewController: UIViewController {
         
         navigationItem.title = "YO!"
     
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
         
     }
     
@@ -161,7 +167,11 @@ class MainViewController: UIViewController {
 
     @objc private func addButtonTapped() {
         
+        let existingUsersController = ExistingUsersViewController()
         
+        DispatchQueue.main.async { [weak self] in
+            self?.present(existingUsersController, animated: true)
+        }
         
     }
     
@@ -210,6 +220,8 @@ extension MainViewController: ExisitngUsersControllerDelegate {
                 
                 sentUsers.append(user)
                 
+                print(user)
+                
                 sentUsers[sentUsers.count - 1].dateAndTimeSent = Date()
                 
             }
@@ -218,7 +230,9 @@ extension MainViewController: ExisitngUsersControllerDelegate {
         
         sortData()
         
-        self.mainControllerTableView.reloadData()
+        DispatchQueue.main.async {
+            self.mainControllerTableView.reloadData()
+        }
         
     }
     

@@ -17,21 +17,44 @@ protocol ExisitngUsersControllerDelegate: AnyObject {
     
 }
 
-class ExisitngUsersViewController: UIViewController {
+class ExistingUsersViewController: UIViewController {
     
     let navbar = UINavigationBar()
-        
-    let contactsControllerTableView = UITableView()
     
-    weak var contactsDelegate: ExisitngUsersControllerDelegate!
+    private let constants = Constants.shared
+        
+    let existingUsersTableView = UITableView()
+    
+    weak var existingUsersDelegate: ExisitngUsersControllerDelegate!
     
     var users: [User] = []
     
     var selectedUsers: [User] = []
     
-    func fetchAllUsers() async {
+    func fetchAllUsers() {
         
         // fetch all users from database
+        DatabaseManager.shared.getAllUsers { [weak self] result in
+            
+            guard let strongSelf = self else {return}
+            
+            switch result {
+                
+            case .failure(let error):
+                // present error
+                strongSelf.constants.presentError(title: "Error", message: error.localizedDescription, target: strongSelf)
+                
+            case .success(let users):
+                
+                DispatchQueue.main.async {
+                    
+                    strongSelf.users = users
+                    
+                    strongSelf.existingUsersTableView.reloadData()
+                }
+                
+            }
+        }
     }
     
 
@@ -44,17 +67,16 @@ class ExisitngUsersViewController: UIViewController {
         setupNavbar()
         
         setupTableView()
+        
+        fetchAllUsers()
                 
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        Task.init {
+        fetchAllUsers()
             
-            await self.fetchAllUsers()
-            
-        }
     }
     
     
@@ -64,7 +86,7 @@ class ExisitngUsersViewController: UIViewController {
         
         navbar.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 60)
         
-        contactsControllerTableView.frame = CGRect(x: 0, y: navbar.frame.height, width: view.frame.width, height: view.frame.height - navbar.frame.height)
+        existingUsersTableView.frame = CGRect(x: 0, y: navbar.frame.height, width: view.frame.width, height: view.frame.height - navbar.frame.height)
         
     }
     
@@ -129,15 +151,15 @@ class ExisitngUsersViewController: UIViewController {
     
     private func setupTableView() {
         
-        contactsControllerTableView.delegate = self
+        existingUsersTableView.delegate = self
         
-        contactsControllerTableView.dataSource = self
+        existingUsersTableView.dataSource = self
         
-        view.addSubview(contactsControllerTableView)
+        view.addSubview(existingUsersTableView)
         
-        contactsControllerTableView.register(UserTableViewCell.self, forCellReuseIdentifier: UserTableViewCell.reuseIdentifier)
+        existingUsersTableView.register(UserTableViewCell.self, forCellReuseIdentifier: UserTableViewCell.reuseIdentifier)
         
-        contactsControllerTableView.allowsMultipleSelection = true
+        existingUsersTableView.allowsMultipleSelection = true
         
     }
     
@@ -168,7 +190,7 @@ class ExisitngUsersViewController: UIViewController {
     
     @objc func sendButtonTapped() {
         
-        contactsDelegate?.sendUsers(users: selectedUsers)
+        existingUsersDelegate?.sendUsers(users: selectedUsers)
                                 
         dismiss(animated: true)
         
@@ -177,7 +199,7 @@ class ExisitngUsersViewController: UIViewController {
 }
 
 
-extension ExisitngUsersViewController: UITableViewDelegate, UITableViewDataSource {
+extension ExistingUsersViewController: UITableViewDelegate, UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -190,7 +212,7 @@ extension ExisitngUsersViewController: UITableViewDelegate, UITableViewDataSourc
         
         let selectedUser = users[indexPath.row]
                 
-        let cell = contactsControllerTableView.dequeueReusableCell(withIdentifier: UserTableViewCell.reuseIdentifier, for: indexPath) as! UserTableViewCell
+        let cell = existingUsersTableView.dequeueReusableCell(withIdentifier: UserTableViewCell.reuseIdentifier, for: indexPath) as! UserTableViewCell
         
         cell.userNameLabel.text = selectedUser.fullName
         

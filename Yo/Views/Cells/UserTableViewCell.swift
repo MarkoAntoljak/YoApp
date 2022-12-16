@@ -11,7 +11,7 @@ class UserTableViewCell: UITableViewCell {
     
     static let reuseIdentifier = "UserCell"
     
-    let userNameLabel = UILabel(frame: .zero)
+    let userNameLabel = UILabel()
     
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {

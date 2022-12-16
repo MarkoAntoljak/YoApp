@@ -43,14 +43,14 @@ class TabBarController: CustomUITabBarController {
                 // main screen
                 let mainScreen = UINavigationController(rootViewController: MainViewController(user: user))
                 
-                mainScreen.tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "thunder"), tag: 0)
+                mainScreen.tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "heart"), tag: 0)
                 
                 mainScreen.title = ""
             
                 // requests screen
                 let requestsScreen = UINavigationController(rootViewController: RequestsViewController())
                 
-                requestsScreen.tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "star"), tag: 1)
+                requestsScreen.tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "bell"), tag: 1)
                 
                 requestsScreen.title = ""
                 

@@ -34,14 +34,12 @@ final class User: Equatable {
     
     var dateAndTimeSent: Date?
     
-    var fullName: String {
-        
-        return "\(firstName) \(lastName)"
-    }
+    let fullName: String
     
-    init(firstName: String, lastName: String, phoneNumber: String, email: String?, dateAndTimeSent: Date? = nil) {
+    init(firstName: String, lastName: String, phoneNumber: String, email: String?, fullname: String, dateAndTimeSent: Date? = nil) {
         self.firstName = firstName
         self.lastName = lastName
+        self.fullName = fullname
         self.phoneNumber = phoneNumber
         self.email = email
         self.dateAndTimeSent = dateAndTimeSent

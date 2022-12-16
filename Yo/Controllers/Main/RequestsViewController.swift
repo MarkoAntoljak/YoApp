@@ -55,10 +55,6 @@ extension RequestsViewController: UITableViewDelegate, UITableViewDataSource, Re
         
     }
     
-    
-
-    
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return dummyUsers.count
     }
