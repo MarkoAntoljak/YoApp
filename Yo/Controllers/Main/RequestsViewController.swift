@@ -55,7 +55,11 @@ extension RequestsViewController: UITableViewDelegate, UITableViewDataSource, Re
         
     }
     
-    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        
+        return 100
+        
+    }
 
     
     

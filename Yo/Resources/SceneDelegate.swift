@@ -21,15 +21,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         // directing user to home screen if it is already signed in
         if AuthManager.shared.isSignedIn {
-            
+
             window?.rootViewController = TabBarController()
-            
+
         } else {
             // user is not signed in
             window?.rootViewController = UINavigationController(rootViewController: PhoneNumberViewController())
-            
+
         }
-        
+
         window?.makeKeyAndVisible()
         
     }

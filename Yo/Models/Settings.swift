@@ -7,10 +7,18 @@
 
 import UIKit
 
+struct SettingsSection {
+    
+    let title: String
+    
+    let cells: [SettingsCell]
+    
+}
+
 struct SettingsCell {
     
     let title: String
     
-    let image: UIImage
+    let icon: UIImage
     
 }

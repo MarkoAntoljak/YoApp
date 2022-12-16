@@ -196,7 +196,7 @@ class MainViewController: UIViewController {
 }
 
 // MARK: ContactsViewControllerDelegate
-extension MainViewController: ExisitngUsersControllerDelegate {
+extension MainViewController: ExistingUsersControllerDelegate {
     
     func sendUsers(users: [User]) {
         

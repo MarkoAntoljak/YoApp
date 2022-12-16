@@ -42,6 +42,7 @@ class PhoneNumberViewController: UIViewController, UNUserNotificationCenterDeleg
         label.textColor = .white
         return label
     }()
+    
     private lazy var button: UIButton = {
         let button = UIButton()
         button.layer.masksToBounds = true

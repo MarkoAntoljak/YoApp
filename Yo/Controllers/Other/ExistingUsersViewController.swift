@@ -11,19 +11,19 @@ import UIKit
 
 import Contacts
 
-protocol ExisitngUsersControllerDelegate: AnyObject {
+protocol ExistingUsersControllerDelegate: AnyObject {
     
     func sendUsers(users: [User])
     
 }
 
-class ExisitngUsersViewController: UIViewController {
+class ExistingUsersController: UIViewController {
     
     let navbar = UINavigationBar()
         
     let contactsControllerTableView = UITableView()
     
-    weak var contactsDelegate: ExisitngUsersControllerDelegate!
+    weak var contactsDelegate: ExistingUsersControllerDelegate!
     
     var users: [User] = []
     
@@ -177,7 +177,7 @@ class ExisitngUsersViewController: UIViewController {
 }
 
 
-extension ExisitngUsersViewController: UITableViewDelegate, UITableViewDataSource {
+extension ExistingUsersController: UITableViewDelegate, UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
