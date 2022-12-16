@@ -19,6 +19,7 @@ class PhoneCodeViewController: UIViewController {
         field.isHidden = false
         return field
     }()
+    
     private lazy var activityIndicator: MDCActivityIndicator = {
         let indicator = MDCActivityIndicator()
         indicator.cycleColors = [.white]
@@ -27,6 +28,7 @@ class PhoneCodeViewController: UIViewController {
         indicator.stopAnimating()
         return indicator
     }()
+    
     private lazy var label: UILabel = {
         let label = UILabel()
         label.text = "ENTER CONFIRMATION\nCODE"
@@ -36,6 +38,7 @@ class PhoneCodeViewController: UIViewController {
         label.textColor = .white
         return label
     }()
+    
     private lazy var resendCodeButton: UIButton = {
         let button = UIButton()
         button.setTitle("Didn't get code? Resend.", for: .normal)
@@ -43,6 +46,7 @@ class PhoneCodeViewController: UIViewController {
         button.setTitleColor(.white, for: .normal)
         return button
     }()
+    
     // MARK: Lifecycle
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -98,6 +102,7 @@ class PhoneCodeViewController: UIViewController {
         view.addGestureRecognizer(tap)
         
     }
+    
     private func addSubviews() {
         
         view.addSubview(textField)
@@ -105,6 +110,7 @@ class PhoneCodeViewController: UIViewController {
         view.addSubview(resendCodeButton)
         view.addSubview(activityIndicator)
     }
+    
     private func makeConstraints() {
         
         textField.snp.makeConstraints { make in
@@ -134,6 +140,7 @@ class PhoneCodeViewController: UIViewController {
         }
         
     }
+    
     private func configureCodeField() {
         
         textField.configure()

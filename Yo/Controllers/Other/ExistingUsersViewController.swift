@@ -11,7 +11,7 @@ import UIKit
 
 import Contacts
 
-protocol ExisitngUsersControllerDelegate: AnyObject {
+protocol ExistingUsersControllerDelegate: AnyObject {
     
     func sendUsers(users: [User])
     

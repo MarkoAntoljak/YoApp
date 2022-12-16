@@ -30,7 +30,8 @@ class TabBarController: CustomUITabBarController {
         
         guard let userUID = UserDefaults.standard.string(forKey: "userUID") else {
             print("no userUID")
-            return}
+            return
+        }
         
         DatabaseManager.shared.getCurrentUserData(for: userUID) { [weak self] result in
 
@@ -55,7 +56,7 @@ class TabBarController: CustomUITabBarController {
                 requestsScreen.title = ""
                 
                 // profile settings screen
-                let profileSettingsScreen = UINavigationController(rootViewController: ProfileSettingsViewController())
+                let profileSettingsScreen = UINavigationController(rootViewController: SettingsViewController())
                 
                 profileSettingsScreen.tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "user"), tag: 1)
                 

@@ -24,6 +24,16 @@ class RequestTableViewCell: UITableViewCell {
     
     let yoButtton = UIButton()
     
+    lazy var profileImage: UIImageView = {
+        let pic = UIImageView()
+        pic.image = UIImage(named: "user")
+        pic.image = pic.image?.withRenderingMode(.alwaysTemplate)
+        pic.tintColor = UIColor.systemPurple
+        pic.layer.masksToBounds = false
+        pic.layer.cornerRadius = pic.frame.height / 2
+        pic.clipsToBounds = true
+        return pic
+    }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         
@@ -56,17 +66,24 @@ class RequestTableViewCell: UITableViewCell {
         
         yoButtton.translatesAutoresizingMaskIntoConstraints = false
         
+        profileImage.translatesAutoresizingMaskIntoConstraints = false
+        
         addSubview(usernameLabel)
         
         addSubview(yoButtton)
         
-        NSLayoutConstraint.activate([
+        addSubview(profileImage)
         
-            usernameLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+        NSLayoutConstraint.activate([
+            
+            profileImage.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+            profileImage.centerYAnchor.constraint(equalTo: centerYAnchor),
+            profileImage.widthAnchor.constraint(equalToConstant: 50),
+            profileImage.heightAnchor.constraint(equalToConstant: 50),
+        
+            usernameLabel.leadingAnchor.constraint(equalTo: profileImage.trailingAnchor, constant: 20),
             usernameLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
             usernameLabel.trailingAnchor.constraint(equalTo: yoButtton.leadingAnchor, constant: -40),
-            
-            
             
             yoButtton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -30),
             yoButtton.centerYAnchor.constraint(equalTo: centerYAnchor)
@@ -75,9 +92,9 @@ class RequestTableViewCell: UITableViewCell {
         
         usernameLabel.lineBreakMode = .byTruncatingTail
         
-        yoButtton.setTitleColor(.systemPurple, for: .normal)
-
-        yoButtton.setTitle("Send YO!", for: .normal)
+        yoButtton.setTitle("Send", for: .normal)
+        
+        yoButtton.setTitleColor(.systemYellow, for: .normal)
         
         yoButtton.addTarget(self, action: #selector(self.yoTapped), for: .touchUpInside)
         

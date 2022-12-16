@@ -11,18 +11,20 @@ import SnapKit
 
 import SafariServices
 
-class ProfileSettingsViewController: UIViewController {
+class SettingsViewController: UIViewController {
     
-    let settingsCellData = [
-    
-        SettingsCell(title: "Notifications", image: UIImage(systemName: "bell.fill")!),
-        SettingsCell(title: "Share", image: UIImage(systemName: "square.and.arrow.up.fill")!),
-        SettingsCell(title: "Rate", image: UIImage(systemName: "star.fill")!),
-        SettingsCell(title: "Contact Us", image: UIImage(systemName: "phone.fill")!),
-        SettingsCell(title: "Privacy Policy", image: UIImage(systemName: "checkmark.seal.fill")!),
-        SettingsCell(title: "Terms & Conditions", image: UIImage(systemName: "lock.rectangle")!),
-        SettingsCell(title: "Logout", image: UIImage(systemName: "rectangle.portrait.and.arrow.right.fill")!),
-        SettingsCell(title: "Delete account", image: UIImage(systemName: "delete.backward.fill")!),
+    private let settingsCellData = [
+        
+        SettingsSection(title: "Basic", cells: [SettingsCell(title: "Notifications", icon: UIImage(systemName: "bell.fill")!),]),
+        
+        SettingsSection(title: "About", cells: [SettingsCell(title: "Share", icon: UIImage(systemName: "square.and.arrow.up.fill")!),
+                        SettingsCell(title: "Rate", icon: UIImage(systemName: "star.fill")!),
+                        SettingsCell(title: "Contact Us", icon: UIImage(systemName: "phone.fill")!),
+                        SettingsCell(title: "Privacy Policy", icon: UIImage(systemName: "checkmark.seal.fill")!),
+                        SettingsCell(title: "Terms & Conditions", icon: UIImage(systemName: "lock.rectangle")!)]),
+        
+        SettingsSection(title: "Account", cells: [SettingsCell(title: "Logout", icon: UIImage(systemName: "rectangle.portrait.and.arrow.right.fill")!),
+                                           SettingsCell(title: "Delete account", icon: UIImage(systemName: "delete.backward.fill")!)])
         
     ]
     
@@ -37,6 +39,10 @@ class ProfileSettingsViewController: UIViewController {
         
         super.viewDidLoad()
         
+        navigationItem.title = "Settings"
+        
+        navigationController?.navigationBar.backgroundColor = .systemBackground
+        
         view.backgroundColor = .systemBackground
         
         navigationController?.navigationBar.backgroundColor = .systemBackground
@@ -48,11 +54,10 @@ class ProfileSettingsViewController: UIViewController {
         setupProfileImage()
                 
     }
-
-    // MARK: - all frame, resizing, layout stuff goes in here
+    
     
     override func viewDidLayoutSubviews() {
-
+        
         super.viewDidLayoutSubviews()
         
         [settingsTableView, profileImageView, usernameLabel].forEach { subview in view.addSubview(subview) }
@@ -62,15 +67,9 @@ class ProfileSettingsViewController: UIViewController {
     }
     
     
-    func setupConstraints() {
+    private func setupTableView() {
         
-        profileImageView.snp.makeConstraints { make in
-            
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(40)
-            make.centerX.equalToSuperview()
-            make.height.width.equalTo(150)
-            
-        }
+        view.addSubview(settingsTableView)
         
         usernameLabel.snp.makeConstraints { make in
             
@@ -78,11 +77,27 @@ class ProfileSettingsViewController: UIViewController {
             make.centerX.equalToSuperview()
             
         }
+        settingsTableView.register(SettingsTableViewCell.self, forCellReuseIdentifier: SettingsTableViewCell.reuseIdentifier)
+        
+        settingsTableView.delegate = self
+        settingsTableView.dataSource = self
+        
+        settingsTableView.separatorStyle = .none
+        
+    }
+
+    
+    // MARK: - Constraints
+    
+    
+    private func setupConstraints() {
         
         settingsTableView.snp.makeConstraints { make in
             
-            make.top.equalTo(usernameLabel.snp.bottom).offset(40)
-            make.width.height.equalTo(view.width)
+            make.top.equalTo(view.top).offset(40)
+            make.height.equalTo(view.height)
+            make.leading.equalTo(view.snp.leading).offset(15)
+            make.trailing.equalTo(view.snp.trailing).offset(-15)
             
         }
         
@@ -129,19 +144,34 @@ class ProfileSettingsViewController: UIViewController {
     
 }
 
+// MARK: - Table View
 
-extension ProfileSettingsViewController: UITableViewDelegate, UITableViewDataSource {
+
+extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
     
-    func setupTableView() {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        settingsTableView.register(SettingsTableViewCell.self, forCellReuseIdentifier: SettingsTableViewCell.reuseIdentifier)
-        settingsTableView.delegate = self
-        settingsTableView.dataSource = self
+        settingsCellData[section].cells.count
         
     }
     
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        
+        return settingsCellData[section].title.uppercased()
+        
+    }
+    
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        
+        return 30.0
+        
+    }
+    
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
         
         return settingsCellData.count
         
@@ -151,8 +181,10 @@ extension ProfileSettingsViewController: UITableViewDelegate, UITableViewDataSou
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = settingsTableView.dequeueReusableCell(withIdentifier: SettingsTableViewCell.reuseIdentifier, for: indexPath) as! SettingsTableViewCell
-        cell.titleLabel.text = settingsCellData[indexPath.row].title
-        cell.iconImageView.image = settingsCellData[indexPath.row].image
+        let cellLocation = settingsCellData[indexPath.section].cells[indexPath.row]
+        cell.titleLabel.text = cellLocation.title
+        cell.iconImageView.image = cellLocation.icon
+        
         return cell
         
     }
@@ -214,8 +246,10 @@ extension ProfileSettingsViewController: UITableViewDelegate, UITableViewDataSou
     
 }
 
+// MARK: - Image & Library Pickers
 
-extension ProfileSettingsViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+
+extension SettingsViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     func openCameraButton(action: UIAlertAction) {
         

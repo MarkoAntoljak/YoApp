@@ -27,14 +27,14 @@
 		9DB117B6294895F50058F0C2 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DB117B5294895F50058F0C2 /* DatabaseManager.swift */; };
 		9DD47C812949C77500694083 /* YoSignUpTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD47C802949C77500694083 /* YoSignUpTextField.swift */; };
 		9DF23737294B18E6009DC875 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DF23734294B18E6009DC875 /* MainViewController.swift */; };
-		9DF2373E294B18F5009DC875 /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DF2373B294B18F5009DC875 /* SettingsCell.swift */; };
+		9DF2373E294B18F5009DC875 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DF2373B294B18F5009DC875 /* Settings.swift */; };
 		9DF2373F294B18F5009DC875 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DF2373C294B18F5009DC875 /* User.swift */; };
 		9DF23740294B18F5009DC875 /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DF2373D294B18F5009DC875 /* UserData.swift */; };
 		9DF23745294B19CF009DC875 /* RequestTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DF23742294B19CF009DC875 /* RequestTableViewCell.swift */; };
 		9DF23746294B19CF009DC875 /* SettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DF23743294B19CF009DC875 /* SettingsTableViewCell.swift */; };
 		9DF23747294B19CF009DC875 /* UserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DF23744294B19CF009DC875 /* UserTableViewCell.swift */; };
 		9DF2374B294B19FC009DC875 /* ContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DF2374A294B19FC009DC875 /* ContactsViewController.swift */; };
-		9DF2374E294B1CB4009DC875 /* ProfileSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DF2374C294B1CB4009DC875 /* ProfileSettingsViewController.swift */; };
+		9DF2374E294B1CB4009DC875 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DF2374C294B1CB4009DC875 /* SettingsViewController.swift */; };
 		9DF2374F294B1CB4009DC875 /* RequestsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DF2374D294B1CB4009DC875 /* RequestsViewController.swift */; };
 		9DF3B1C02949FE11004EA179 /* finished_animation.json in Resources */ = {isa = PBXBuildFile; fileRef = 9DF3B1BF2949FE11004EA179 /* finished_animation.json */; };
 /* End PBXBuildFile section */
@@ -65,14 +65,14 @@
 		9DB117B5294895F50058F0C2 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		9DD47C802949C77500694083 /* YoSignUpTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YoSignUpTextField.swift; sourceTree = "<group>"; };
 		9DF23734294B18E6009DC875 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
-		9DF2373B294B18F5009DC875 /* SettingsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
+		9DF2373B294B18F5009DC875 /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		9DF2373C294B18F5009DC875 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		9DF2373D294B18F5009DC875 /* UserData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
 		9DF23742294B19CF009DC875 /* RequestTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestTableViewCell.swift; sourceTree = "<group>"; };
 		9DF23743294B19CF009DC875 /* SettingsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewCell.swift; sourceTree = "<group>"; };
 		9DF23744294B19CF009DC875 /* UserTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserTableViewCell.swift; sourceTree = "<group>"; };
 		9DF2374A294B19FC009DC875 /* ContactsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsViewController.swift; sourceTree = "<group>"; };
-		9DF2374C294B1CB4009DC875 /* ProfileSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileSettingsViewController.swift; sourceTree = "<group>"; };
+		9DF2374C294B1CB4009DC875 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		9DF2374D294B1CB4009DC875 /* RequestsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestsViewController.swift; sourceTree = "<group>"; };
 		9DF3B1BF2949FE11004EA179 /* finished_animation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = finished_animation.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -161,7 +161,7 @@
 				9D591D02294B3E190046C858 /* TabBarController.swift */,
 				9DF23734294B18E6009DC875 /* MainViewController.swift */,
 				9DF2374D294B1CB4009DC875 /* RequestsViewController.swift */,
-				9DF2374C294B1CB4009DC875 /* ProfileSettingsViewController.swift */,
+				9DF2374C294B1CB4009DC875 /* SettingsViewController.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -199,7 +199,7 @@
 		9DF2373A294B18F5009DC875 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				9DF2373B294B18F5009DC875 /* SettingsCell.swift */,
+				9DF2373B294B18F5009DC875 /* Settings.swift */,
 				9DF2373C294B18F5009DC875 /* User.swift */,
 				9DF2373D294B18F5009DC875 /* UserData.swift */,
 			);
@@ -370,7 +370,7 @@
 				9DA87ABA294734DC00D7E29E /* PhoneCodeViewController.swift in Sources */,
 				9DF2373F294B18F5009DC875 /* User.swift in Sources */,
 				9DA87ABF2947522F00D7E29E /* YoPhoneCodeTextField.swift in Sources */,
-				9DF2374E294B1CB4009DC875 /* ProfileSettingsViewController.swift in Sources */,
+				9DF2374E294B1CB4009DC875 /* SettingsViewController.swift in Sources */,
 				9DA87ABC2947358700D7E29E /* SignUpFormViewController.swift in Sources */,
 				6792B564294494D80033165E /* AppDelegate.swift in Sources */,
 				9DF23740294B18F5009DC875 /* UserData.swift in Sources */,
@@ -380,7 +380,7 @@
 				6792B566294494D80033165E /* SceneDelegate.swift in Sources */,
 				9DF23747294B19CF009DC875 /* UserTableViewCell.swift in Sources */,
 				9DA87AC12947672500D7E29E /* YoDetailedInfoFormView.swift in Sources */,
-				9DF2373E294B18F5009DC875 /* SettingsCell.swift in Sources */,
+				9DF2373E294B18F5009DC875 /* Settings.swift in Sources */,
 				9DF23746294B19CF009DC875 /* SettingsTableViewCell.swift in Sources */,
 				9DA87AB62944B1D700D7E29E /* Constants.swift in Sources */,
 			);

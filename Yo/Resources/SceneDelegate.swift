@@ -29,7 +29,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             window?.rootViewController = UINavigationController(rootViewController: PhoneNumberViewController())
 
         }
-        
+
         window?.makeKeyAndVisible()
         
     }
