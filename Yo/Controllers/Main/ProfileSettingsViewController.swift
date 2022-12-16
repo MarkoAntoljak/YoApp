@@ -7,10 +7,11 @@
 
 import UIKit
 
+import SnapKit
+
 import SafariServices
 
 class ProfileSettingsViewController: UIViewController {
-    
     
     let settingsCellData = [
     
@@ -18,189 +19,135 @@ class ProfileSettingsViewController: UIViewController {
         SettingsCell(title: "Share", image: UIImage(systemName: "square.and.arrow.up.fill")!),
         SettingsCell(title: "Rate", image: UIImage(systemName: "star.fill")!),
         SettingsCell(title: "Contact Us", image: UIImage(systemName: "phone.fill")!),
+        SettingsCell(title: "Privacy Policy", image: UIImage(systemName: "checkmark.seal.fill")!),
+        SettingsCell(title: "Terms & Conditions", image: UIImage(systemName: "lock.rectangle")!),
+        SettingsCell(title: "Logout", image: UIImage(systemName: "rectangle.portrait.and.arrow.right.fill")!),
+        SettingsCell(title: "Delete account", image: UIImage(systemName: "delete.backward.fill")!),
         
     ]
-    
     
     let settingsTableView = UITableView()
         
     let usernameLabel = UILabel()
+    let profileImageView = UIImageView()
     
-    let footerLogoImageView = UIImageView()
+    let editButton = UIButton()
     
-    let footerStackView = UIStackView()
-    
-    let privacyButton = UIButton()
-    
-    let termsButton = UIButton()
-    
-
     override func viewDidLoad() {
         
         super.viewDidLoad()
         
         view.backgroundColor = .systemBackground
-        
-        navigationController?.navigationBar.backgroundColor = .systemBackground
-        
-        navigationItem.title = "Profile Settings"
-        
+                
         setupTableView()
-        
-        setupFooter()
         
         setupUsername()
         
+        setupProfileImage()
+        
+        setupEditIcon()
+                
     }
-    
-    // MARK: Here we need to put this inside here because we are setting CGRect coordinates and the way to do that by using another subview's frame can only be done inside here
+
+    // MARK: - all frame, resizing, layout stuff goes in here
     
     override func viewDidLayoutSubviews() {
-        
+
         super.viewDidLayoutSubviews()
-                
-        let tableViewOffset = usernameLabel.frame.origin.y + usernameLabel.frame.height + 50
         
-        settingsTableView.frame = CGRect(x: 0, y: tableViewOffset, width: view.frame.width, height: view.frame.height)
+        [settingsTableView, profileImageView, usernameLabel, editButton].forEach { subview in view.addSubview(subview) }
+
+        setupConstraints()
         
     }
     
     
-    func setupFooter() {
+    func setupConstraints() {
         
-        footerStackView.translatesAutoresizingMaskIntoConstraints = false
-        
-        footerLogoImageView.translatesAutoresizingMaskIntoConstraints = false
-        
-        view.addSubview(footerStackView)
-        
-        view.addSubview(footerLogoImageView)
-        
-        footerLogoImageView.image = UIImage(named: "YO!")
-        
-        footerLogoImageView.contentMode = .scaleAspectFit
-        
-        footerStackView.axis = .horizontal
-        
-        footerStackView.distribution = .fillEqually
-        
-        footerStackView.spacing = 20
-        
-        footerStackView.addArrangedSubview(privacyButton)
-        
-        footerStackView.addArrangedSubview(termsButton)
-        
-        NSLayoutConstraint.activate([
+        profileImageView.snp.makeConstraints { make in
             
-            footerLogoImageView.bottomAnchor.constraint(equalTo: footerStackView.topAnchor, constant: -30),
-            footerLogoImageView.heightAnchor.constraint(equalToConstant: 20),
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(40)
+            make.centerX.equalToSuperview()
+            make.height.width.equalTo(150)
             
-            footerLogoImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            
-            footerStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10),
-            footerStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            footerStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            footerStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            
-            
-        ])
+        }
         
-        termsButton.setTitle("Terms", for: .normal)
-        
-        privacyButton.setTitle("Privacy", for: .normal)
-        
-        termsButton.setTitleColor(.systemPurple, for: .normal)
-        
-        privacyButton.setTitleColor(.systemPurple, for: .normal)
-        
-        termsButton.contentHorizontalAlignment = .left
-        
-        privacyButton.contentHorizontalAlignment = .right
-        
-        termsButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 12)
-        
-        privacyButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 12)
+        editButton.snp.makeConstraints { make in
 
-        termsButton.addTarget(self, action: #selector(termsTapped), for: .touchUpInside)
+            make.leading.equalTo(profileImageView.snp.centerX).offset(35)
+            make.top.equalTo(profileImageView.snp.bottom).offset(-20)
+            
+        }
         
-        privacyButton.addTarget(self, action: #selector(privacyTapped), for: .touchUpInside)
-                        
+        usernameLabel.snp.makeConstraints { make in
+            
+            make.top.equalTo(profileImageView.snp.bottom).offset(15)
+            make.centerX.equalToSuperview()
+            
+        }
+        
+        settingsTableView.snp.makeConstraints { make in
+            
+            make.top.equalTo(usernameLabel.snp.bottom).offset(40)
+            make.width.height.equalTo(view.width)
+            
+        }
+        
     }
     
     
     private func setupUsername() {
-        
-        usernameLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        view.addSubview(usernameLabel)
-        
-        usernameLabel.textAlignment = .center
-        
-        usernameLabel.textColor = .label
-        
-        usernameLabel.numberOfLines = 0
-        
-        usernameLabel.font = .boldSystemFont(ofSize: 26)
                 
-        usernameLabel.text = "Tomi Ant"
-        
-        NSLayoutConstraint.activate([
-        
-            usernameLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -70),
-            usernameLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            usernameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            usernameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
-            
-        ])
+        usernameLabel.textAlignment = .center
+        usernameLabel.textColor = .label
+        usernameLabel.numberOfLines = 0
+        usernameLabel.font = .boldSystemFont(ofSize: 26)
+        usernameLabel.text = "Jeanine, 24"
         
     }
     
     
-    @objc func privacyTapped() {
+    private func setupProfileImage() {
         
-        DispatchQueue.main.async {
-            
-            let viewController = SFSafariViewController(url: URL(string: "https://www.tesla.com")!)
-            
-            self.present(viewController, animated: true)
-            
-        }
+        profileImageView.image = UIImage(named: "girl")
+        profileImageView.contentMode = .scaleAspectFill
+        
+        profileImageView.layer.cornerRadius = 80
+        profileImageView.clipsToBounds = true
         
     }
     
     
-    @objc func termsTapped() {
+    private func setupEditIcon() {
         
-        DispatchQueue.main.async {
-            
-            let viewController = SFSafariViewController(url: URL(string: "https://www.tesla.com")!)
-            
-            self.present(viewController, animated: true)
-            
-        }
+        editButton.setImage(UIImage(systemName: "pencil"), for: .normal)
+        editButton.addTarget(self, action: #selector(editImageTapped), for: .touchUpInside)
         
     }
     
-
+    
+    @objc func editImageTapped() {
+        
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        alertController.addAction(UIAlertAction(title: "Camera", style: .default, handler: openCameraButton(action:)))
+        alertController.addAction(UIAlertAction(title: "Photo Library", style: .default, handler: openPhotoLibrary(action:)))
+        
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        
+        present(alertController, animated: true)
+        
+    }
+    
 }
 
 
 extension ProfileSettingsViewController: UITableViewDelegate, UITableViewDataSource {
     
-    
-    
     func setupTableView() {
-                
-        view.addSubview(settingsTableView)
-        
-        settingsTableView.translatesAutoresizingMaskIntoConstraints = false
         
         settingsTableView.register(SettingsTableViewCell.self, forCellReuseIdentifier: SettingsTableViewCell.reuseIdentifier)
-        
-        settingsTableView.isScrollEnabled = false
-        
         settingsTableView.delegate = self
-        
         settingsTableView.dataSource = self
         
     }
@@ -216,13 +163,8 @@ extension ProfileSettingsViewController: UITableViewDelegate, UITableViewDataSou
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = settingsTableView.dequeueReusableCell(withIdentifier: SettingsTableViewCell.reuseIdentifier, for: indexPath) as! SettingsTableViewCell
-                            
         cell.titleLabel.text = settingsCellData[indexPath.row].title
-        
         cell.iconImageView.image = settingsCellData[indexPath.row].image
-        
-        cell.accessoryType = .disclosureIndicator
-        
         return cell
         
     }
@@ -231,6 +173,87 @@ extension ProfileSettingsViewController: UITableViewDelegate, UITableViewDataSou
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         settingsTableView.deselectRow(at: indexPath, animated: true)
+        
+        let cellNumber = indexPath.row
+        
+        let safariVC = SFSafariViewController(url: URL(string: "https://www.blabla.com")!)
+        
+        switch cellNumber {
+            
+        case 0:
+            
+            guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else {
+                        return
+                    }
+            UIApplication.shared.open(settingsUrl)
+            
+        case 1:
+            present(safariVC, animated: true)
+            
+        case 2:
+            present(safariVC, animated: true)
+            
+        case 3:
+            present(safariVC, animated: true)
+            
+        case 4:
+            present(safariVC, animated: true)
+            
+        case 5:
+            present(safariVC, animated: true)
+            
+        case 6:
+            present(safariVC, animated: true)
+            
+        case 7:
+            present(safariVC, animated: true)
+        
+        default:
+            return
+            
+        }
+        
+    }
+    
+}
+
+
+extension ProfileSettingsViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func openCameraButton(action: UIAlertAction) {
+        
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            
+            let imagePicker = UIImagePickerController()
+            
+            imagePicker.delegate = self
+            
+            imagePicker.sourceType = .camera
+            
+            imagePicker.allowsEditing = true
+            
+            self.present(imagePicker, animated: true)
+            
+        }
+        
+    }
+    
+    
+    func openPhotoLibrary(action: UIAlertAction) {
+        
+        if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
+            
+            let imagePicker = UIImagePickerController()
+            
+            imagePicker.delegate = self
+            
+            imagePicker.sourceType = .photoLibrary
+            
+            imagePicker.allowsEditing = true
+            
+            self.present(imagePicker, animated: true)
+            
+        }
         
     }
     
