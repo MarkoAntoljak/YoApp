@@ -14,12 +14,13 @@ struct DatabaseManager {
     static let shared = DatabaseManager()
     
     private let database = Firestore.firestore()
-    
+    // cache current user
     private let cachedUser = NSCache<NSString, User>()
     
     enum ErrorType: Error {
         
         case ErrorGettingUser
+        case ErrorGettingAllUsers
     }
     
     // MARK: Functions
@@ -87,7 +88,7 @@ struct DatabaseManager {
     
     // checking if the user is already in the database
     public func checkIfUserExists(userUID: String, completion: @escaping (Bool) -> Void) {
-            
+        
         database.collection("users").getDocuments { snapshot, error in
             
             guard let snapshot = snapshot, error == nil else {
@@ -105,6 +106,47 @@ struct DatabaseManager {
             }
             // user doesn't exist
             completion(false)
+        }
+        
+    }
+    
+    // get all Yo users
+    public func getAllUsers(completion: @escaping (Result<[User], Error>) -> Void) {
+        
+        var allUsers: [User] = [User]()
+        
+        database.collection("users").getDocuments { snapshot, error in
+            
+            guard let currentUserUID = UserDefaults.standard.string(forKey: "userUID") else {
+                print("No user uid")
+                completion(.failure(ErrorType.ErrorGettingAllUsers))
+                return
+            }
+            
+            guard let snapshot = snapshot, error == nil else {
+                print("Error: there was a problem with snapshot")
+                completion(.failure(ErrorType.ErrorGettingAllUsers))
+                return
+            }
+            
+            for document in snapshot.documents {
+                // skip current user
+                if document.documentID == currentUserUID {
+                    continue
+                }
+                // get all info from user
+                let data = document.data()
+                let firstName = data["first_name"] as! String
+                let lastName = data["last_name"] as! String
+                let email = data["email"] as! String
+                let phoneNumber = data["phone_number"] as! String
+                
+                let user = User(firstName: firstName, lastName: lastName, phoneNumber: phoneNumber, email: email)
+                
+                allUsers.append(user)
+            }
+            
+            completion(.success(allUsers))
         }
         
     }
@@ -136,7 +178,7 @@ struct DatabaseManager {
         }
         
     }
-
+    
     
     
 }
