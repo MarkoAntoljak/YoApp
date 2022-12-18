@@ -6,57 +6,36 @@
 //
 
 import UIKit
-
-import UIKit
-
 import Contacts
-
-protocol ExistingUsersControllerDelegate: AnyObject {
-    
-    func sendUsers(users: [User])
-    
-}
 
 class ExistingUsersViewController: UIViewController {
     
-    let navbar = UINavigationBar()
+    // MARK: Attributes
+
+    private var users: [User] = []
+    
+    let user: User
     
     private let constants = Constants.shared
+    
+    // MARK: UI Elements
+    private let navbar = UINavigationBar()
         
-    let existingUsersTableView = UITableView()
+    private let existingUsersTableView = UITableView()
     
-    weak var existingUsersDelegate: ExisitngUsersControllerDelegate!
-    
-    var users: [User] = []
-    
-    var selectedUsers: [User] = []
-    
-    func fetchAllUsers() {
+    // MARK: Init
+    init(user: User) {
         
-        // fetch all users from database
-        DatabaseManager.shared.getAllUsers { [weak self] result in
-            
-            guard let strongSelf = self else {return}
-            
-            switch result {
-                
-            case .failure(let error):
-                // present error
-                strongSelf.constants.presentError(title: "Error", message: error.localizedDescription, target: strongSelf)
-                
-            case .success(let users):
-                
-                DispatchQueue.main.async {
-                    
-                    strongSelf.users = users
-                    
-                    strongSelf.existingUsersTableView.reloadData()
-                }
-                
-            }
-        }
+        self.user = user
+        
+        super.init(nibName: nil, bundle: nil)
     }
-    
+
+    required init?(coder: NSCoder) {
+        fatalError()
+    }
+
+    // MARK: Lifecycle
 
     override func viewDidLoad() {
         
@@ -90,6 +69,7 @@ class ExistingUsersViewController: UIViewController {
         
     }
     
+    // MARK: View Setup Functions
     
     private func setupNavbar() {
         
@@ -97,15 +77,7 @@ class ExistingUsersViewController: UIViewController {
         
         navbar.backgroundColor = .systemBackground
         
-        let cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismissContactViewController))
-        
-        let sendButton = UIBarButtonItem(title: "Send Yo", style: .done, target: self, action: #selector(sendButtonTapped))
-        
         let navItem = UINavigationItem(title: "")
-        
-        navItem.leftBarButtonItem = cancelButton
-        
-        navItem.rightBarButtonItem = sendButton
         
         navItem.titleView = setTitle(title: "All YO users", subtitle: "Tap to select")
         
@@ -163,6 +135,32 @@ class ExistingUsersViewController: UIViewController {
         
     }
     
+    // MARK: Functions
+    func fetchAllUsers() {
+        
+        // fetch all users from database
+        DatabaseManager.shared.getAllUsers { [weak self] result in
+            
+            guard let strongSelf = self else {return}
+            
+            switch result {
+                
+            case .failure(let error):
+                // present error
+                strongSelf.constants.presentError(title: "Error", message: error.localizedDescription, target: strongSelf)
+                
+            case .success(let users):
+                
+                DispatchQueue.main.async {
+                    
+                    strongSelf.users = users
+                    
+                    strongSelf.existingUsersTableView.reloadData()
+                }
+                
+            }
+        }
+    }
     
     private func showSettingsAlert() {
         
@@ -180,24 +178,12 @@ class ExistingUsersViewController: UIViewController {
         present(alert, animated: true)
     }
     
+    // MARK: Button Actions
     
-    @objc func dismissContactViewController() {
-                        
-        dismiss(animated: true)
-                
-    }
-    
-    
-    @objc func sendButtonTapped() {
-        
-        existingUsersDelegate?.sendUsers(users: selectedUsers)
-                                
-        dismiss(animated: true)
-        
-    }
 
 }
 
+// MARK: TableView Delegate and DataSource
 
 extension ExistingUsersViewController: UITableViewDelegate, UITableViewDataSource {
     
@@ -232,21 +218,32 @@ extension ExistingUsersViewController: UITableViewDelegate, UITableViewDataSourc
         
         let selectedUser = users[indexPath.row]
         
-        if selectedUsers.contains(selectedUser) {
-                        
-            tableView.cellForRow(at: indexPath)?.accessoryType = .none
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        DatabaseManager.shared.createSenderData(sender: user, receiver: selectedUser) { [weak self] success in
             
-            selectedUsers.removeAll { $0 == selectedUser }
-                        
-        } else {
+            guard let strongSelf = self else {return}
             
-            tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
-                                
-            selectedUsers.append(selectedUser)
-                                                                        
+            if success {
+                
+                DispatchQueue.main.async {
+                    
+                    strongSelf.dismiss(animated: true)
+                    
+                    strongSelf.users.remove(at: indexPath.row)
+                    
+                    strongSelf.existingUsersTableView.reloadData()
+                    
+                }
+                
+            } else {
+                
+                strongSelf.constants.presentError(title: "Error", message: "Cannot send yo to that user.", target: strongSelf)
+            }
         }
         
-        tableView.deselectRow(at: indexPath, animated: true)
+        
+        
         
     }
 

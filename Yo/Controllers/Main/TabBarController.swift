@@ -56,7 +56,7 @@ class TabBarController: CustomUITabBarController {
                 requestsScreen.title = ""
                 
                 // profile settings screen
-                let profileSettingsScreen = UINavigationController(rootViewController: SettingsViewController())
+                let profileSettingsScreen = UINavigationController(rootViewController: SettingsViewController(user: user))
                 
                 profileSettingsScreen.tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "user"), tag: 1)
                 

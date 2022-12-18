@@ -202,15 +202,15 @@ struct DatabaseManager {
                 return
             }
             
-            if var sentYOS = document["sent_yos"] as? [User]{
-                // create
-                sentYOS.append(receiverUser)
+            if var sentYOS = document["sent_yos"] as? [String]{
+                // create document field with array
+                sentYOS.append(receiverUser.fullName)
                 
                 document["sent_yos"] = sentYOS
                 
             } else {
-                //append if array exists
-                document["sent_yos"] = [receiverUser]
+                // append if array exists
+                document["sent_yos"] = [receiverUser.fullName]
                 
             }
             
@@ -231,7 +231,7 @@ struct DatabaseManager {
     }
     
     // MARK: Sending receiver data into database
-    public func createReceiverData(sender currentUser: User, recevier receiverUser: User, completion: @escaping (Bool) -> Void) {
+    private func createReceiverData(sender currentUser: User, recevier receiverUser: User, completion: @escaping (Bool) -> Void) {
             
         database.collection("users").getDocuments { snapshot, error in
             
@@ -251,9 +251,6 @@ struct DatabaseManager {
                     
                     receiverDocumentName = document.documentID
                     
-                } else {
-                    print("Error: there is no user with name \(receiverUser.fullName)")
-                    completion(false)
                 }
             }
             
@@ -269,15 +266,15 @@ struct DatabaseManager {
                     return
                 }
                 
-                if var receivedYOS = document["received_yos"] as? [User] {
+                if var receivedYOS = document["received_yos"] as? [String] {
                     // create
-                    receivedYOS.append(currentUser)
+                    receivedYOS.append(currentUser.fullName)
                     
                     document["received_yos"] = receivedYOS
                     
                 } else {
                     //append if array exists
-                    document["received_yos"] = [currentUser]
+                    document["received_yos"] = [currentUser.fullName]
                     
                 }
                 
@@ -296,7 +293,7 @@ struct DatabaseManager {
     }
     
     // MARK: Fetch sent yos
-    public func getSentYos(completion: @escaping (Result<[User],Error>) -> Void) {
+    public func getSentYos(completion: @escaping (Result<[String],Error>) -> Void) {
         
         guard let currentUserUID = UserDefaults.standard.string(forKey: "userUID") else {
             print("no userUID")
@@ -313,7 +310,7 @@ struct DatabaseManager {
                 return
             }
             
-            if var users = document["sent_yos"] as? [User] {
+            if var users = document["sent_yos"] as? [String] {
                 // append every user in the document
                 for user in users {
                     
@@ -331,7 +328,7 @@ struct DatabaseManager {
     }
     
     // MARK: Fetch received yos
-    public func getReceivedYos(completion: @escaping (Result<[User],Error>) -> Void) {
+    public func getReceivedYos(completion: @escaping (Result<[String],Error>) -> Void) {
         
         guard let currentUserUID = UserDefaults.standard.string(forKey: "userUID") else {
             print("no userUID")
@@ -348,7 +345,7 @@ struct DatabaseManager {
                 return
             }
             
-            if var users = document["received_yos"] as? [User] {
+            if var users = document["received_yos"] as? [String] {
                 // append every user in the document
                 for user in users {
                     
