@@ -72,6 +72,8 @@ class ContactsViewController: UIViewController, MFMessageComposeViewControllerDe
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
+        fetchAllContacts()
+        
         // do refresh on a main thread
         DispatchQueue.main.async {
             self.contactsControllerTableView.reloadData()

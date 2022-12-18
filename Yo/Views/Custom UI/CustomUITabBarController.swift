@@ -11,7 +11,7 @@ class CustomUITabBarController: UITabBarController {
     
     
     var color: UIColor?
-    var radius: CGFloat = 15.0
+    var radius: CGFloat = 20.0
     
     private var shapeLayer: CALayer?
     
@@ -54,8 +54,8 @@ class CustomUITabBarController: UITabBarController {
         super.viewDidLayoutSubviews()
         self.tabBar.isTranslucent = true
         var tabFrame            = self.tabBar.frame
-        tabFrame.size.height    = 65 + (view.safeAreaInsets.bottom)
-        tabFrame.origin.y       = self.view.frame.origin.y +   ( self.view.frame.height - 65 - (view.safeAreaInsets.bottom))
+        tabFrame.size.height    = 55 + (view.safeAreaInsets.bottom)
+        tabFrame.origin.y       = self.view.frame.origin.y +   ( self.view.frame.height - 55 - (view.safeAreaInsets.bottom))
         self.tabBar.layer.cornerRadius = 20
         self.tabBar.frame            = tabFrame
         

@@ -22,7 +22,7 @@ class MainViewController: UIViewController {
     
     private lazy var emptyStateBigLabel: UILabel = {
         let label = UILabel()
-        label.text = "No YO-s for now...😱"
+        label.text = "No YO-s for now 😱"
         label.font = .systemFont(ofSize: 24, weight: .black)
         label.textAlignment = .center
         label.textColor = .systemPurple.withAlphaComponent(0.7)
@@ -52,6 +52,13 @@ class MainViewController: UIViewController {
     }
     
     // MARK: Lifecycle
+    
+    override func loadView() {
+        super.loadView()
+        
+        fetchUsers()
+    }
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -61,8 +68,6 @@ class MainViewController: UIViewController {
         setupMainTableView()
         
         setConstraints()
-        
-        showEmptyState()
         
         // title
         navigationController?.navigationBar.backgroundColor = .systemBackground
@@ -77,6 +82,9 @@ class MainViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
+        fetchUsers()
+        
+        showEmptyState()
         
     }
     
@@ -167,7 +175,7 @@ class MainViewController: UIViewController {
 
     @objc private func addButtonTapped() {
         
-        let existingUsersController = ExistingUsersViewController()
+        let existingUsersController = ExistingUsersViewController(user: currentUser)
         
         DispatchQueue.main.async { [weak self] in
             self?.present(existingUsersController, animated: true)
@@ -196,47 +204,68 @@ class MainViewController: UIViewController {
                 return dateAndTime1 > dateAndTime2
                 
             }
-            
             return false
-            
         }
+    }
+    
+    // fetching all send yos from database
+    private func fetchUsers() {
         
+        DatabaseManager.shared.getSentYos { result in
+            
+            switch result {
+                
+            case .failure(let error):
+                
+                print(error.localizedDescription)
+                
+            case .success(let users):
+                
+                DispatchQueue.main.async { [weak self] in
+                    
+                    self?.sentUsers = users
+                    
+                    self?.mainControllerTableView.reloadData()
+                }
+                
+            }
+        }
     }
     
 }
 
-// MARK: ContactsViewControllerDelegate
-extension MainViewController: ExistingUsersControllerDelegate {
-    
-    func sendUsers(users: [User]) {
-        
-        for user in users {
-            
-            if let index = sentUsers.firstIndex(where: { $0.fullName == user.fullName } ) {
-                
-                sentUsers[index].dateAndTimeSent = Date()
-                
-            } else {
-                
-                sentUsers.append(user)
-                
-                print(user)
-                
-                sentUsers[sentUsers.count - 1].dateAndTimeSent = Date()
-                
-            }
-            
-        }
-        
-        sortData()
-        
-        DispatchQueue.main.async {
-            self.mainControllerTableView.reloadData()
-        }
-        
-    }
-    
-}
+// SORT BY DATE AND TIME OF SENT YO
+//extension MainViewController: ExistingUsersControllerDelegate {
+//    
+//    func sendUsers(users: [User]) {
+//        
+//        for user in users {
+//            
+//            if let index = sentUsers.firstIndex(where: { $0.fullName == user.fullName } ) {
+//                
+//                sentUsers[index].dateAndTimeSent = Date()
+//                
+//            } else {
+//                
+//                sentUsers.append(user)
+//                
+//                print(user)
+//                
+//                sentUsers[sentUsers.count - 1].dateAndTimeSent = Date()
+//                
+//            }
+//            
+//        }
+//        
+//        sortData()
+//        
+//        DispatchQueue.main.async {
+//            self.mainControllerTableView.reloadData()
+//        }
+//        
+//    }
+//    
+//}
 
 // MARK: TableView Delegate and Data Source
 extension MainViewController: UITableViewDelegate, UITableViewDataSource {

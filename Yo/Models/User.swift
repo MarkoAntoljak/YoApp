@@ -8,7 +8,7 @@
 import Foundation
 
 
-final class User: Equatable {
+final class User: Equatable, Codable {
     
     static func == (lhs: User, rhs: User) -> Bool {
         
@@ -37,6 +37,7 @@ final class User: Equatable {
     let fullName: String
     
     init(firstName: String, lastName: String, phoneNumber: String, email: String?, fullname: String, dateAndTimeSent: Date? = nil) {
+        
         self.firstName = firstName
         self.lastName = lastName
         self.fullName = fullname

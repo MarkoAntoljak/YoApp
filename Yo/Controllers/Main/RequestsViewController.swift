@@ -9,14 +9,19 @@ import UIKit
 
 class RequestsViewController: UIViewController {
     
+    // MARK: Attributes
     
-    let dummyUsers = UserData.users
+    var receviedUsers: [User] = []
     
     let requestsTableView = UITableView()
     
+    
+    // MARK: Lifecycle
     override func viewDidLoad() {
         
         super.viewDidLoad()
+        
+        fetchUsers()
         
         view.backgroundColor = .systemBackground
         
@@ -27,6 +32,40 @@ class RequestsViewController: UIViewController {
         setupTableView()
         
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        fetchUsers()
+    }
+    
+    // MARK: Functions
+    private func fetchUsers() {
+        
+        DatabaseManager.shared.getReceivedYos { result in
+            
+            switch result {
+                
+            case .failure(let error):
+                
+                print(error.localizedDescription)
+                
+            case .success(let users):
+                
+                DispatchQueue.main.async { [weak self] in
+                    
+                    self?.receviedUsers = users
+                    
+                    print(users.first?.fullName)
+                    
+                    self?.requestsTableView.reloadData()
+                }
+                
+            }
+        }
+        
+    }
+
 
     
 }
@@ -56,12 +95,12 @@ extension RequestsViewController: UITableViewDelegate, UITableViewDataSource, Re
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dummyUsers.count
+        return receviedUsers.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let currentUser = dummyUsers[indexPath.row]
+        let currentUser = receviedUsers[indexPath.row]
         
         let cell = requestsTableView.dequeueReusableCell(withIdentifier: RequestTableViewCell.reuseIdentifier, for: indexPath) as! RequestTableViewCell
     
