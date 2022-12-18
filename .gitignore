@@ -1,4 +1,4 @@
-.DS_Store
+
 # macOS
 .DS_Store
 
@@ -9,3 +9,4 @@
 /DerivedData/
 
 Pods
+GoogleService-Info.plist
