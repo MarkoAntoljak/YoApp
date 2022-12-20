@@ -14,6 +14,7 @@ target 'Yo' do
 	pod 'IQKeyboardManager'
 	pod 'lottie-ios'
 	pod 'PhoneNumberKit'
+  pod 'JGProgressHUD'
 	
 	pod 'MaterialComponents/ActivityIndicator'
 end

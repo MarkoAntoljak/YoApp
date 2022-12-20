@@ -17,6 +17,8 @@ struct DatabaseManager {
     // cache current user
     private let cachedUser = NSCache<NSString, User>()
     
+    private let cachedSentUsers = NSCache<NSString, NSArray>()
+    
     enum ErrorType: Error {
         
         case ErrorGettingUser
@@ -310,6 +312,11 @@ struct DatabaseManager {
             return
         }
         
+        if let sentUsers = cachedSentUsers.object(forKey: "cachedSentUsers") as? [User] {
+            completion(.success(sentUsers))
+            return
+        }
+        
         database.collection("users").document(currentUserUID).getDocument { snapshot, error in
             
             guard let snapshot = snapshot,
@@ -336,6 +343,9 @@ struct DatabaseManager {
                     
                     users.append(user)
                 }
+                
+                // cache users
+                cachedSentUsers.setObject(users as NSArray, forKey: "cachedSentUsers")
                 
                 completion(.success(users))
                 

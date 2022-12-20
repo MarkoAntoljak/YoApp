@@ -12,6 +12,8 @@ import MessageUI
 
 class ContactsViewController: UIViewController, MFMessageComposeViewControllerDelegate {
         
+    // MARK: Attributes
+
     let navbar = UINavigationBar()
     
     let contactsControllerTableView = UITableView()
@@ -22,35 +24,7 @@ class ContactsViewController: UIViewController, MFMessageComposeViewControllerDe
     
     var contactPhoneNumbers: [String] = []
     
-    func fetchAllContacts() {
-        
-        let store = CNContactStore()
-        
-        let keys = [CNContactGivenNameKey, CNContactFamilyNameKey, CNContactPhoneNumbersKey] as [CNKeyDescriptor]
-        
-        let fetchRequest = CNContactFetchRequest(keysToFetch: keys)
-        
-        DispatchQueue.global(qos: .background).async { [weak self] in
-         
-            do {
-                
-                try store.enumerateContacts(with: fetchRequest, usingBlock: { contact, result in
-                                    
-                    self?.contacts.append("\(contact.givenName) \(contact.familyName)")
-                    
-                    self?.contactPhoneNumbers.append(contact.phoneNumbers.first?.value.stringValue ?? "")
-                                    
-                })
-                
-            } catch {
-                
-                self?.showSettingsAlert()
-                
-            }
-        }
-        
-    }
-    
+    // MARK: Lifecycle
     override func loadView() {
         super.loadView()
         
@@ -74,10 +48,6 @@ class ContactsViewController: UIViewController, MFMessageComposeViewControllerDe
         
         fetchAllContacts()
         
-        // do refresh on a main thread
-        DispatchQueue.main.async {
-            self.contactsControllerTableView.reloadData()
-        }
     }
     
     override func viewDidLayoutSubviews() {
@@ -90,13 +60,13 @@ class ContactsViewController: UIViewController, MFMessageComposeViewControllerDe
         
     }
     
-    
+    // MARK: View Setup Functions
+
     private func setupViewController() {
         
         view.backgroundColor = .systemBackground
         
     }
-    
     
     private func setupNavbar() {
         
@@ -117,7 +87,6 @@ class ContactsViewController: UIViewController, MFMessageComposeViewControllerDe
         navbar.tintColor = .systemPurple
         
     }
-    
     
     func setTitle(title:String, subtitle:String) -> UIView {
         let titleLabel = UILabel(frame: CGRectMake(0, -2, 0, 0))
@@ -166,7 +135,8 @@ class ContactsViewController: UIViewController, MFMessageComposeViewControllerDe
         
     }
     
-    
+    // MARK: Functions
+
     private func showSettingsAlert() {
         
         let alert = UIAlertController(title: nil, message: "This app requires access to Contacts to proceed. Go to Settings to grant access.", preferredStyle: .alert)
@@ -185,14 +155,48 @@ class ContactsViewController: UIViewController, MFMessageComposeViewControllerDe
         present(alert, animated: true)
     }
     
+    func fetchAllContacts() {
+        
+        let store = CNContactStore()
+        
+        let keys = [CNContactGivenNameKey, CNContactFamilyNameKey, CNContactPhoneNumbersKey] as [CNKeyDescriptor]
+        
+        let fetchRequest = CNContactFetchRequest(keysToFetch: keys)
+        
+        DispatchQueue.global(qos: .background).async { [weak self] in
+         
+            do {
+                
+                try store.enumerateContacts(with: fetchRequest, usingBlock: { contact, result in
+                                    
+                    self?.contacts.append("\(contact.givenName) \(contact.familyName)")
+                    
+                    self?.contactPhoneNumbers.append(contact.phoneNumbers.first?.value.stringValue ?? "")
+                                    
+                })
+                
+            } catch {
+                
+                self?.showSettingsAlert()
+                
+            }
+        }
+        // refresh
+        DispatchQueue.main.async { [weak self] in
+            self?.contactsControllerTableView.reloadData()
+        }
+        
+    }
+    
     // MARK: Button Actions
-    @objc func dismissContactViewController() {
+    @objc
+    private func dismissContactViewController() {
         
         dismiss(animated: true)
         
     }
     
-    // MARK: Send Messages Functions
+    // MARK: Send Message Function
     private func displayMessageInterface(for userAt: Int) {
         
         let composeVC = MFMessageComposeViewController()
@@ -224,7 +228,7 @@ class ContactsViewController: UIViewController, MFMessageComposeViewControllerDe
 
 }
 
-
+// MARK: TableView Delegate and Data Source
 extension ContactsViewController: UITableViewDelegate, UITableViewDataSource {
     
     

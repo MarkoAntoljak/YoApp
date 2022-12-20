@@ -53,12 +53,6 @@ class MainViewController: UIViewController {
     
     // MARK: Lifecycle
     
-    override func loadView() {
-        super.loadView()
-        
-        fetchUsers()
-    }
-    
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -76,6 +70,10 @@ class MainViewController: UIViewController {
         
         navigationItem.title = "YO!"
     
+        // fetch users
+        fetchUsers()
+        
+        showEmptyState()
         
     }
     
@@ -109,6 +107,9 @@ class MainViewController: UIViewController {
         mainControllerTableView.delegate = self
         
         mainControllerTableView.dataSource = self
+        
+        mainControllerTableView.refreshControl = UIRefreshControl()
+        mainControllerTableView.refreshControl?.addTarget(self, action: #selector(didRefresh), for: .valueChanged)
         
     }
     
@@ -171,7 +172,7 @@ class MainViewController: UIViewController {
         
     }
     
-    // MARK: Button actions
+    // MARK: Actions
 
     @objc private func addButtonTapped() {
         
@@ -190,6 +191,14 @@ class MainViewController: UIViewController {
         DispatchQueue.main.async { [weak self] in
             self?.present(contactsViewController, animated: true)
         }
+        
+    }
+    // pull to refresh action
+    @objc private func didRefresh() {
+        
+        fetchUsers()
+        
+        mainControllerTableView.refreshControl?.endRefreshing()
         
     }
     
@@ -226,6 +235,8 @@ class MainViewController: UIViewController {
                     self?.sentUsers = users
                     
                     self?.mainControllerTableView.reloadData()
+                    
+                    self?.sortData()
                 }
                 
             }
@@ -233,39 +244,6 @@ class MainViewController: UIViewController {
     }
     
 }
-
-// SORT BY DATE AND TIME OF SENT YO
-//extension MainViewController: ExistingUsersControllerDelegate {
-//    
-//    func sendUsers(users: [User]) {
-//        
-//        for user in users {
-//            
-//            if let index = sentUsers.firstIndex(where: { $0.fullName == user.fullName } ) {
-//                
-//                sentUsers[index].dateAndTimeSent = Date()
-//                
-//            } else {
-//                
-//                sentUsers.append(user)
-//                
-//                print(user)
-//                
-//                sentUsers[sentUsers.count - 1].dateAndTimeSent = Date()
-//                
-//            }
-//            
-//        }
-//        
-//        sortData()
-//        
-//        DispatchQueue.main.async {
-//            self.mainControllerTableView.reloadData()
-//        }
-//        
-//    }
-//    
-//}
 
 // MARK: TableView Delegate and Data Source
 extension MainViewController: UITableViewDelegate, UITableViewDataSource {
@@ -311,16 +289,17 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     // removing on swipe cell left
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        
-        if editingStyle == .delete {
-            
-            sentUsers.remove(at: indexPath.row)
-            
-            mainControllerTableView.deleteRows(at: [indexPath], with: .fade)
-            
-        }
-        
-    }
+//    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+//
+//        if editingStyle == .delete {
+//
+//            sentUsers.remove(at: indexPath.row)
+//
+//            mainControllerTableView.deleteRows(at: [indexPath], with: .fade)
+//
+//        }
+//
+//    }
+    
     
 }
