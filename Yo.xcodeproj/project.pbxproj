@@ -93,6 +93,7 @@
 		6792B557294494D80033165E = {
 			isa = PBXGroup;
 			children = (
+				9DF3DCAB294F5E80008BEF14 /* README.md */,
 				6792B562294494D80033165E /* Yo */,
 				6792B561294494D80033165E /* Products */,
 				ADBBB094531F59F447974041 /* Pods */,
@@ -118,7 +119,6 @@
 				9DA87AA82944AE1100D7E29E /* Resources */,
 				9DA87AA62944AE0600D7E29E /* Controllers */,
 				9DA87AA52944AE0000D7E29E /* Views */,
-				9DF3DCAB294F5E80008BEF14 /* README.md */,
 			);
 			path = Yo;
 			sourceTree = "<group>";
