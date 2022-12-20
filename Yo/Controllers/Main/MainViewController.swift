@@ -69,8 +69,6 @@ class MainViewController: UIViewController {
         
         setConstraints()
         
-        showEmptyState()
-        
         // title
         navigationController?.navigationBar.backgroundColor = .systemBackground
         
@@ -85,6 +83,9 @@ class MainViewController: UIViewController {
         super.viewDidAppear(animated)
         
         fetchUsers()
+        
+        showEmptyState()
+        
     }
     
     override func viewDidLayoutSubviews() {
@@ -222,9 +223,7 @@ class MainViewController: UIViewController {
                 
                 DispatchQueue.main.async { [weak self] in
                     
-                    //self?.sentUsers = users
-                    
-                    print(users)
+                    self?.sentUsers = users
                     
                     self?.mainControllerTableView.reloadData()
                 }

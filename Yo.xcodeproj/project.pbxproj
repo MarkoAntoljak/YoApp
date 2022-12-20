@@ -75,6 +75,7 @@
 		9DF2374C294B1CB4009DC875 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		9DF2374D294B1CB4009DC875 /* RequestsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestsViewController.swift; sourceTree = "<group>"; };
 		9DF3B1BF2949FE11004EA179 /* finished_animation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = finished_animation.json; sourceTree = "<group>"; };
+		9DF3DCAB294F5E80008BEF14 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +118,7 @@
 				9DA87AA82944AE1100D7E29E /* Resources */,
 				9DA87AA62944AE0600D7E29E /* Controllers */,
 				9DA87AA52944AE0000D7E29E /* Views */,
+				9DF3DCAB294F5E80008BEF14 /* README.md */,
 			);
 			path = Yo;
 			sourceTree = "<group>";

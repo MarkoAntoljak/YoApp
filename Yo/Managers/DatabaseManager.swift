@@ -202,15 +202,20 @@ struct DatabaseManager {
                 return
             }
             
-            if var sentYOS = document["sent_yos"] as? [String]{
+            guard let userAsDictionary = receiverUser.dict else {
+                print("Cannot convert user to dictionary")
+                return
+            }
+            
+            if var sentYOS = document["sent_yos"] as? [[String : Any]]{
                 // create document field with array
-                sentYOS.append(receiverUser.fullName)
+                sentYOS.append(userAsDictionary)
                 
                 document["sent_yos"] = sentYOS
                 
             } else {
                 // append if array exists
-                document["sent_yos"] = [receiverUser.fullName]
+                document["sent_yos"] = [userAsDictionary]
                 
             }
             
@@ -266,15 +271,20 @@ struct DatabaseManager {
                     return
                 }
                 
-                if var receivedYOS = document["received_yos"] as? [String] {
+                guard let userAsDictionary = currentUser.dict else {
+                    print("Cannot convert user to dictionary")
+                    return
+                }
+                
+                if var receivedYOS = document["received_yos"] as? [[String : Any]] {
                     // create
-                    receivedYOS.append(currentUser.fullName)
+                    receivedYOS.append(userAsDictionary)
                     
                     document["received_yos"] = receivedYOS
                     
                 } else {
                     //append if array exists
-                    document["received_yos"] = [currentUser.fullName]
+                    document["received_yos"] = [userAsDictionary]
                     
                 }
                 
@@ -293,7 +303,7 @@ struct DatabaseManager {
     }
     
     // MARK: Fetch sent yos
-    public func getSentYos(completion: @escaping (Result<[String],Error>) -> Void) {
+    public func getSentYos(completion: @escaping (Result<[User],Error>) -> Void) {
         
         guard let currentUserUID = UserDefaults.standard.string(forKey: "userUID") else {
             print("no userUID")
@@ -310,9 +320,19 @@ struct DatabaseManager {
                 return
             }
             
-            if var users = document["sent_yos"] as? [String] {
+            var users: [User] = []
+            
+            if let usersDictionaries = document["sent_yos"] as? [[String : Any]] {
                 // append every user in the document
-                for user in users {
+                for user in usersDictionaries {
+                    // convert propreties into user obj
+                    let firstName = user["firstName"] as! String
+                    let lastName = user["lastName"] as! String
+                    let email = user["email"] as! String
+                    let phoneNumber = user["phoneNumber"] as! String
+                    let fullName = user["fullName"] as! String
+                        
+                    let user = User(firstName: firstName, lastName: lastName, phoneNumber: phoneNumber, email: email, fullname: fullName)
                     
                     users.append(user)
                 }
@@ -328,7 +348,7 @@ struct DatabaseManager {
     }
     
     // MARK: Fetch received yos
-    public func getReceivedYos(completion: @escaping (Result<[String],Error>) -> Void) {
+    public func getReceivedYos(completion: @escaping (Result<[User],Error>) -> Void) {
         
         guard let currentUserUID = UserDefaults.standard.string(forKey: "userUID") else {
             print("no userUID")
@@ -345,9 +365,19 @@ struct DatabaseManager {
                 return
             }
             
-            if var users = document["received_yos"] as? [String] {
+            var users: [User] = []
+            
+            if let usersDictionaries = document["received_yos"] as? [[String: Any]] {
                 // append every user in the document
-                for user in users {
+                for user in usersDictionaries {
+                    // convert propreties into user obj
+                    let firstName = user["firstName"] as! String
+                    let lastName = user["lastName"] as! String
+                    let email = user["email"] as! String
+                    let phoneNumber = user["phoneNumber"] as! String
+                    let fullName = user["fullName"] as! String
+                        
+                    let user = User(firstName: firstName, lastName: lastName, phoneNumber: phoneNumber, email: email, fullname: fullName)
                     
                     users.append(user)
                 }

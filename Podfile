@@ -12,8 +12,6 @@ target 'Yo' do
 	# other libraries
 	pod 'SnapKit'
 	pod 'IQKeyboardManager'
-	pod 'ProgressHUD'
-	pod 'SDWebImage'
 	pod 'lottie-ios'
 	pod 'PhoneNumberKit'
 	
