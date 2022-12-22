@@ -7,11 +7,15 @@
 
 import UIKit
 import Contacts
+<<<<<<< HEAD
 import JGProgressHUD
+=======
+>>>>>>> main
 
 class ExistingUsersViewController: UIViewController {
     
     // MARK: Attributes
+<<<<<<< HEAD
     private var users: [User] = []
     
     let user: User
@@ -21,6 +25,12 @@ class ExistingUsersViewController: UIViewController {
         progress.textLabel.text = "Sending Yo"
         return progress
     }()
+=======
+
+    private var users: [User] = []
+    
+    let user: User
+>>>>>>> main
     
     private let constants = Constants.shared
     
@@ -183,6 +193,12 @@ class ExistingUsersViewController: UIViewController {
         
         present(alert, animated: true)
     }
+<<<<<<< HEAD
+=======
+    
+    // MARK: Button Actions
+    
+>>>>>>> main
 
 }
 
@@ -221,18 +237,28 @@ extension ExistingUsersViewController: UITableViewDelegate, UITableViewDataSourc
         
         tableView.deselectRow(at: indexPath, animated: true)
         
+<<<<<<< HEAD
         progressIndicator.show(in: view, animated: true)
         
+=======
+>>>>>>> main
         DatabaseManager.shared.createSenderData(sender: user, receiver: selectedUser) { [weak self] success in
             
             guard let strongSelf = self else {return}
             
             if success {
                 
+<<<<<<< HEAD
                 self?.progressIndicator.dismiss(animated: true)
                 
                 DispatchQueue.main.async {
                     
+=======
+                DispatchQueue.main.async {
+                    
+                    strongSelf.dismiss(animated: true)
+                    
+>>>>>>> main
                     strongSelf.users.remove(at: indexPath.row)
                     
                     strongSelf.existingUsersTableView.reloadData()

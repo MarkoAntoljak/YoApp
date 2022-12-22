@@ -53,6 +53,15 @@ class MainViewController: UIViewController {
     
     // MARK: Lifecycle
     
+<<<<<<< HEAD
+=======
+    override func loadView() {
+        super.loadView()
+        
+        fetchUsers()
+    }
+    
+>>>>>>> main
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -215,6 +224,7 @@ class MainViewController: UIViewController {
             }
             return false
         }
+<<<<<<< HEAD
     }
     
     // fetching all send yos from database
@@ -244,6 +254,68 @@ class MainViewController: UIViewController {
     }
     
 }
+=======
+    }
+    
+    // fetching all send yos from database
+    private func fetchUsers() {
+        
+        DatabaseManager.shared.getSentYos { result in
+            
+            switch result {
+                
+            case .failure(let error):
+                
+                print(error.localizedDescription)
+                
+            case .success(let users):
+                
+                DispatchQueue.main.async { [weak self] in
+                    
+                    self?.sentUsers = users
+                    
+                    self?.mainControllerTableView.reloadData()
+                }
+                
+            }
+        }
+    }
+    
+}
+
+// SORT BY DATE AND TIME OF SENT YO
+//extension MainViewController: ExistingUsersControllerDelegate {
+//    
+//    func sendUsers(users: [User]) {
+//        
+//        for user in users {
+//            
+//            if let index = sentUsers.firstIndex(where: { $0.fullName == user.fullName } ) {
+//                
+//                sentUsers[index].dateAndTimeSent = Date()
+//                
+//            } else {
+//                
+//                sentUsers.append(user)
+//                
+//                print(user)
+//                
+//                sentUsers[sentUsers.count - 1].dateAndTimeSent = Date()
+//                
+//            }
+//            
+//        }
+//        
+//        sortData()
+//        
+//        DispatchQueue.main.async {
+//            self.mainControllerTableView.reloadData()
+//        }
+//        
+//    }
+//    
+//}
+>>>>>>> main
 
 // MARK: TableView Delegate and Data Source
 extension MainViewController: UITableViewDelegate, UITableViewDataSource {

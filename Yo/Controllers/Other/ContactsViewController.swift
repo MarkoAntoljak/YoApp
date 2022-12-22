@@ -48,6 +48,13 @@ class ContactsViewController: UIViewController, MFMessageComposeViewControllerDe
         
         fetchAllContacts()
         
+<<<<<<< HEAD
+=======
+        // do refresh on a main thread
+        DispatchQueue.main.async {
+            self.contactsControllerTableView.reloadData()
+        }
+>>>>>>> main
     }
     
     override func viewDidLayoutSubviews() {
